@@ -9,9 +9,19 @@
 import UIKit
 import AVFoundation
 import Photos
+import FirebaseAuth
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 	// MARK: View Controller Life Cycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        guard FIRAuth.auth()?.currentUser != nil else {
+            performSegue(withIdentifier: "LoginVC", sender: nil)
+            return
+        }
+        
+    }
 	
     override func viewDidLoad() {
 		super.viewDidLoad()

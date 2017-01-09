@@ -7,8 +7,8 @@ target 'firstsecond' do
 
   # Pods for firstsecond
   pod 'Firebase'
-  pod 'Firebase/Storage'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end
