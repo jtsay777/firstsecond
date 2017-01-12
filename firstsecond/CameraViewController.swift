@@ -11,20 +11,112 @@ import AVFoundation
 import Photos
 import FirebaseAuth
 
-class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UITableViewDelegate, UITableViewDataSource {
 	// MARK: View Controller Life Cycle
+    
+    let menu = ["Settings", "Scoring", "Logout"]
+    
+    @IBOutlet weak var menuTableView: UITableView!
+    
+    @IBAction func menuPressed(_ sender: UIButton) {
+        print("menu pressed!")
+        menuTableView.isHidden = !menuTableView.isHidden
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as UITableViewCell? {
+            cell.textLabel?.text = menu[indexPath.row]
+            cell.textLabel?.textColor = UIColor.yellow
+            cell.backgroundColor = UIColor.clear
+            return cell
+        }
+//        else {
+//            let cell = UITableViewCell()
+//            cell.textLabel?.text = menu[indexPath.row]
+//            cell.textLabel?.textColor = UIColor.yellow
+//            cell.backgroundColor = UIColor.clear
+//            return cell
+//        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("you click \(menu[indexPath.row])")
+        
+        if menu[indexPath.row] == "SecondVC" {
+            //dismiss(animated: true, completion: nil)
+            
+            print("before dismiss ThirdVC")
+            dismiss(animated: true, completion: {
+                //let secondVC = self.storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
+                //self.present(secondVC, animated:true, completion:nil)
+                //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
+            })
+        }
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return menu.count
+    }
+    
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let usersVC = segue.destination as? UsersVC {
+            if let videoDict = sender as? Dictionary<String, URL> {
+                let url = videoDict["videoURL"]
+                usersVC.videoURL = url
+            } else if let snapDict = sender as? Dictionary<String, Data> {
+                let snapData = snapDict["snapshotData"]
+                usersVC.snapData = snapData
+            }
+        }
+    }
+    
+    func snapshotFailed() {
+        
+    }
+    
+    func snapshotTaken(_ snapshotData: Data!) {
+        performSegue(withIdentifier: "UsersVC", sender: ["snapshotData":snapshotData])
+    }
+    
+    func videoRecordingFailed() {
+        
+    }
+    
+    func videoRecordingComplete(_ videoURL: URL!) {
+        performSegue(withIdentifier: "UsersVC", sender: ["videoURL":videoURL])
+    }
+    
+
     
     override func viewDidAppear(_ animated: Bool) {
         
-        guard FIRAuth.auth()?.currentUser != nil else {
-            performSegue(withIdentifier: "LoginVC", sender: nil)
-            return
-        }
+//        guard FIRAuth.auth()?.currentUser != nil else {
+//            performSegue(withIdentifier: "LoginVC", sender: nil)
+//            return
+//        }
         
     }
 	
     override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        menuTableView.delegate = self
+        menuTableView.dataSource = self
+        
+        menuTableView.separatorStyle = .none
+        menuTableView.backgroundColor = UIColor.clear
+        menuTableView.isHidden = true
 		
 		// Disable UI. The UI is enabled if and only if the session starts running.
 		cameraButton.isEnabled = false
@@ -174,6 +266,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 	var videoDeviceInput: AVCaptureDeviceInput!
 	
 	@IBOutlet private weak var previewView: PreviewView!
+    
 	
 	// Call this on the session queue.
 	private func configureSession() {
@@ -726,9 +819,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 		if error != nil {
 			print("Movie file finishing error: \(error)")
 			success = (((error as NSError).userInfo[AVErrorRecordingSuccessfullyFinishedKey] as AnyObject).boolValue)!
+            
+            videoRecordingFailed()
 		}
 		
 		if success {
+            
+            videoRecordingComplete(outputFileURL)
+            
+            /*
 			// Check authorization status.
 			PHPhotoLibrary.requestAuthorization { status in
 				if status == .authorized {
@@ -750,8 +849,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 					cleanup()
 				}
 			}
+             */
 		}
 		else {
+            videoRecordingFailed()
 			cleanup()
 		}
 		

@@ -48,6 +48,8 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         DataService.instance.usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
+            print("snapshot: \(snapshot.debugDescription)")
+            
             if let users = snapshot.value as? Dictionary<String, AnyObject> {
                 for (key, value) in users {
                     if let dict = value as? Dictionary<String, AnyObject> {
@@ -62,6 +64,7 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
+            print("users: \(self.users)")
             self.tableView.reloadData()
             
         }
@@ -133,18 +136,10 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     print("Error uploading snapshot: \(err?.localizedDescription)")
                 } else {
                     let downloadURL = meta!.downloadURL()
-                    self.dismiss(animated: true, completion: nil)
+                    //self.dismiss(animated: true, completion: nil)
                 }
            })
-//            _ = ref.put(snap, metadata: nil, completion: { (meta:FIRStorageMetadata?, err:NSError?) in
-//                
-//                if err != nil {
-//                    print("Error uploading snapshot: \(err?.localizedDescription)")
-//                } else {
-//                    let downloadURL = meta!.downloadURL()
-//                    self.dismiss(animated: true, completion: nil)
-//                }
-//            })
+
             self.dismiss(animated: true, completion: nil)
         }
     }

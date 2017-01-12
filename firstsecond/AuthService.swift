@@ -37,6 +37,8 @@ class AuthService {
                             } else {
                                 if user?.uid != nil {
                                     
+                                    print("uid = \(user?.uid)")
+                                    
                                     DataService.instance.saveUser(uid: user!.uid)
                                     //Sign in
                                     FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
