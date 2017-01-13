@@ -24,6 +24,7 @@
 		C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD31E23FAA70074A130 /* CameraViewController.swift */; };
 		C6453CD61E23FAA70074A130 /* PhotoCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */; };
 		C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD71E23FAD50074A130 /* PreviewView.swift */; };
+		C6453CFC1E2847790074A130 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CFB1E2847790074A130 /* SettingsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		C6453CD31E23FAA70074A130 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCaptureDelegate.swift; sourceTree = "<group>"; };
 		C6453CD71E23FAD50074A130 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		C6453CFB1E2847790074A130 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		C6C7ADAED02B2D48906D358E /* Pods_firstsecond.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firstsecond.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +135,7 @@
 				C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */,
 				C6453CCD1E23F9850074A130 /* LoginVC.swift */,
 				C6453CCE1E23F9850074A130 /* UsersVC.swift */,
+				C6453CFB1E2847790074A130 /* SettingsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6453CFC1E2847790074A130 /* SettingsVC.swift in Sources */,
 				C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */,
 				C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */,
 				C6453CC51E23F8B90074A130 /* AuthService.swift in Sources */,

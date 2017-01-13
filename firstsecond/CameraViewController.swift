@@ -32,13 +32,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             cell.backgroundColor = UIColor.clear
             return cell
         }
-//        else {
-//            let cell = UITableViewCell()
-//            cell.textLabel?.text = menu[indexPath.row]
-//            cell.textLabel?.textColor = UIColor.yellow
-//            cell.backgroundColor = UIColor.clear
-//            return cell
-//        }
         
         return UITableViewCell()
     }
