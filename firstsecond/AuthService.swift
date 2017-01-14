@@ -37,7 +37,7 @@ class AuthService {
                             } else {
                                 if user?.uid != nil {
                                     
-                                    print("uid = \(user?.uid)")
+                                    print("uid = \(user?.uid), create a new user")
                                     
                                     DataService.instance.saveUser(uid: user!.uid)
                                     //Sign in
@@ -58,6 +58,7 @@ class AuthService {
                 }
             } else {
                 //Successfully logged in
+                print("uid = \(user?.uid), Successfully logged in")
                 onComplete?(nil, user)
             }
             

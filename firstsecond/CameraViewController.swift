@@ -39,6 +39,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("you click \(menu[indexPath.row])")
         
+        menuTableView.isHidden = true
+        
         if menu[indexPath.row] == "SecondVC" {
             //dismiss(animated: true, completion: nil)
             
@@ -48,6 +50,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 //self.present(secondVC, animated:true, completion:nil)
                 //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
             })
+        }
+        else if menu[indexPath.row] == "Logout" {
+            try! FIRAuth.auth()?.signOut()
+            performSegue(withIdentifier: "LoginVC", sender: nil)
+            return
         }
     }
     
@@ -94,10 +101,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func viewDidAppear(_ animated: Bool) {
         
-//        guard FIRAuth.auth()?.currentUser != nil else {
-//            performSegue(withIdentifier: "LoginVC", sender: nil)
-//            return
-//        }
+        guard FIRAuth.auth()?.currentUser != nil else {
+            performSegue(withIdentifier: "LoginVC", sender: nil)
+            return
+        }
         
     }
 	
