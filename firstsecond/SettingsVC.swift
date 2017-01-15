@@ -12,7 +12,19 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     let menu = ["Capturing", "Scoring", "Logout"]
     var imagePicker: UIImagePickerController!
+    
+    private var _uid: String?
+    
+    var uid: String? {
+        set {
+            _uid = newValue
+        } get {
+            return _uid
+        }
+    }
 
+
+    @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var avatarBtn: RoundedButton!
     @IBOutlet weak var menuTableView: UITableView!
     @IBOutlet weak var firstnameTF: RoundTextField!
@@ -35,6 +47,14 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             
             if firstname.characters.count > 0 && lastname.characters.count > 0 && nickname.characters.count > 0 {
                 print("firstname = \(firstname), lastname = \(lastname), nickname = \(nickname)")
+                
+                print("before dismiss SettingsVC")
+                dismiss(animated: true, completion: {
+                    //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
+                    let user = User(uid: self.uid!, nickname: nickname, firstName: firstname, lastName: lastname)
+                    DataService.instance.updateProfile(user: user)
+                })
+
             }
             else {
                 let alert = UIAlertController(title: "All Names Required", message: "You must enter all first name, last name and nickname", preferredStyle: .alert)
@@ -118,6 +138,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         menuTableView.separatorStyle = .none
         menuTableView.backgroundColor = UIColor.clear
         menuTableView.isHidden = true
+        
+        menuBtn.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {

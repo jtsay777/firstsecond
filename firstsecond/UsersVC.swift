@@ -54,9 +54,9 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 for (key, value) in users {
                     if let dict = value as? Dictionary<String, AnyObject> {
                         if let profile = dict["profile"] as? Dictionary<String, AnyObject> {
-                            if let firstName = profile["firstName"] as? String {
+                            if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String {
                                 let uid = key
-                                let user = User(uid: uid, firstName: firstName)
+                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName)
                                 self.users.append(user)
                             }
                         }

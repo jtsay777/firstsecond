@@ -602,6 +602,7 @@
                         <outlet property="avatarBtn" destination="7RR-N3-bLH" id="INU-v7-051"/>
                         <outlet property="firstnameTF" destination="0Dk-OW-mhT" id="aci-Oc-vse"/>
                         <outlet property="lastnameTF" destination="5LY-dB-ncI" id="Rgv-CZ-3F8"/>
+                        <outlet property="menuBtn" destination="hdH-nF-VPi" id="31B-zB-Vft"/>
                         <outlet property="menuTableView" destination="NWh-zk-qBK" id="U8P-2u-pIF"/>
                         <outlet property="nicknameTF" destination="xZt-jS-An9" id="W32-Se-MOC"/>
                     </connections>

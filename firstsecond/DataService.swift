@@ -12,6 +12,7 @@ import Foundation
 import FirebaseDatabase
 import FirebaseStorage
 
+
 class DataService {
     private static let _instance = DataService()
     
@@ -40,11 +41,43 @@ class DataService {
         return mainStorageRef.child("videos")
     }
     
-    func saveUser(uid: String) {
-        let profile: Dictionary<String, AnyObject> = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
-        mainRef.child(FIR_CHILD_USERS).child(uid).child("profile").setValue(profile)
+    func doesUrerProfileExist(uid: String, onComplete: @escaping (_ existing: Bool) -> Void) {
+        //return mainRef.child(FIR_CHILD_USERS).child(uid).value(forKey: "profile") != nil //crash
+        
+        usersRef.observeSingleEvent(of: FIRDataEventType.value, with: { (snapshot) in
+            
+            print("snapshot = \(snapshot)")
+            if snapshot.hasChild(uid){
+                
+                print("users exist")
+                if let users = snapshot.value as? Dictionary<String, AnyObject> {
+                    if let user = users[uid] as? Dictionary<String, AnyObject> {
+                        if let _ = user["profile"] as? Dictionary<String, AnyObject> {
+                            print("profile exists!")
+                            onComplete(true)
+                        }
+                    }
+                    else {
+                        print("users doesn't exist 001")
+                        onComplete(false)
+                    }
+                }
+                else {
+                    print("users doesn't exist 002")
+                    onComplete(false)
+                }
+                
+            }else{
+                
+                print("users doesn't exist 003")
+                onComplete(false)
+            }
+            
+            
+        })
+        
     }
-    
+        
     func sendMediaPullRequest(senderUID: String, sendingTo:Dictionary<String, User>, mediaURL: URL, textSnippet: String? = nil) {
         
         var uids = [String]()
@@ -59,7 +92,17 @@ class DataService {
     }
     
     
-    
+    func updateProfile(user: User) {
+        let uid = user.uid
+        let nickname = user.nickname
+        let firstName = user.firstName
+        let lastName = user.lastName
+        let avatarUrl = user.avatarUrl
+        
+        let profile: Dictionary<String, AnyObject> = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject, "avatarUrl": avatarUrl as AnyObject]
+        
+        mainRef.child(FIR_CHILD_USERS).child(uid).child("profile").setValue(profile)
+    }
     
     
     

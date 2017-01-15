@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginVC: UIViewController {
 
@@ -35,7 +36,33 @@ class LoginVC: UIViewController {
                         return
                     }
                     
-                    self.dismiss(animated: true, completion: nil)
+                    if let firUser = data as? FIRUser {
+                        let uid = firUser.uid 
+                        print("!!!uid = \(uid)")
+                       
+   
+                        DataService.instance.doesUrerProfileExist(uid: uid, onComplete: { (existing) in
+                            
+                            if !existing {
+                                //launch Settings to do updateProfile
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let settingsVC = storyboard.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
+                                settingsVC.uid = uid
+                                self.present(settingsVC, animated:true, completion:{
+                                    self.dismiss(animated: true, completion: nil)
+                                })
+                                //self.dismiss(animated: true, completion: nil)
+                            }
+                            else {
+                                print("User Profile already exists.")
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        })
+ 
+                        
+                    }
+                    
+                    //self.dismiss(animated: true, completion: nil)
                 })
             }
             else {

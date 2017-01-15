@@ -39,13 +39,14 @@ class AuthService {
                                     
                                     print("uid = \(user?.uid), create a new user")
                                     
-                                    DataService.instance.saveUser(uid: user!.uid)
                                     //Sign in
                                     FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                                         if error != nil {
                                             self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
                                         } else {
-                                            onComplete?(nil, user)
+                                            //onComplete?(nil, user)
+                                            onComplete?(nil, user?.uid as AnyObject?)
+                                            
                                         }
                                     })
                                 }
