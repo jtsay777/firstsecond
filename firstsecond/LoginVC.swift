@@ -14,6 +14,17 @@ class LoginVC: UIViewController {
     @IBOutlet weak var emailField: RoundTextField!
     @IBOutlet weak var passwordField: RoundTextField!
     
+    private var _delegate: PresentFromMainVC?
+    
+    var delegate: PresentFromMainVC? {
+        set {
+            _delegate = newValue
+        } get {
+            return _delegate
+        }
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,14 +55,19 @@ class LoginVC: UIViewController {
                         DataService.instance.doesUrerProfileExist(uid: uid, onComplete: { (existing) in
                             
                             if !existing {
-                                //launch Settings to do updateProfile
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let settingsVC = storyboard.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
-                                settingsVC.uid = uid
-                                self.present(settingsVC, animated:true, completion:{
-                                    self.dismiss(animated: true, completion: nil)
+                                self.dismiss(animated: true, completion: {
+                                    print("User Profile not exist yet.")
+//                                    //launch Settings to do updateProfile
+//                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                                    let settingsVC = storyboard.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
+//                                    settingsVC.uid = uid
+//                                    print("present SettingsVC Before")
+//                                    self.present(settingsVC, animated:true, completion:nil)
+//                                    print("present SettingsVC After")
+                                    
+                                    //launch Settings to do updateProfile
+                                    self.delegate?.launchVC(vcName: "SettingsVC", uid: uid)
                                 })
-                                //self.dismiss(animated: true, completion: nil)
                             }
                             else {
                                 print("User Profile already exists.")

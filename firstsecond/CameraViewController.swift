@@ -11,7 +11,12 @@ import AVFoundation
 import Photos
 import FirebaseAuth
 
-class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UITableViewDelegate, UITableViewDataSource {
+protocol PresentFromMainVC {
+    // protocol definition
+    func launchVC(vcName: String, uid: String)
+}
+
+class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UITableViewDelegate, UITableViewDataSource, PresentFromMainVC {
 	// MARK: View Controller Life Cycle
     
     let menu = ["Settings", "Scoring", "Logout"]
@@ -22,6 +27,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         print("menu pressed!")
         menuTableView.isHidden = !menuTableView.isHidden
     }
+    
+    func launchVC(vcName: String, uid: String) {
+        if (vcName == "SettingsVC") {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: vcName) as! SettingsVC
+            vc.uid = uid
+            self.present(vc, animated:true, completion:nil)
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -56,6 +70,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             performSegue(withIdentifier: "LoginVC", sender: nil)
             return
         }
+        else if menu[indexPath.row] == "Settings" {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
+            vc.uid = FIRAuth.auth()?.currentUser?.uid
+            self.present(vc, animated:true, completion:nil)
+        }
     }
     
     
@@ -78,6 +97,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let snapData = snapDict["snapshotData"]
                 usersVC.snapData = snapData
             }
+        }
+        else if let loginVC = segue.destination as? LoginVC {
+            loginVC.delegate = self
         }
     }
     

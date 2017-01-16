@@ -8,9 +8,12 @@
 
 import UIKit
 
-class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+func pretty_function(file:String = #file, function:String = #function, line:Int = #line) {
+    print("file:\(file) function:\(function) line:\(line)")
+}
+
+class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let menu = ["Capturing", "Scoring", "Logout"]
     var imagePicker: UIImagePickerController!
     
     private var _uid: String?
@@ -23,10 +26,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         }
     }
 
-
-    @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var avatarBtn: RoundedButton!
-    @IBOutlet weak var menuTableView: UITableView!
     @IBOutlet weak var firstnameTF: RoundTextField!
     @IBOutlet weak var lastnameTF: RoundTextField!
     @IBOutlet weak var nicknameTF: RoundTextField!
@@ -35,6 +35,10 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         print("avatarUpload pressed!")
         
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func cancelPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func donePressed(_ sender: UIButton) {
@@ -52,7 +56,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 dismiss(animated: true, completion: {
                     //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
                     let user = User(uid: self.uid!, nickname: nickname, firstName: firstname, lastName: lastname)
+                    print("Before updateProfile")
                     DataService.instance.updateProfile(user: user)
+                    print("After updateProfile")
                 })
 
             }
@@ -70,47 +76,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
     }
     
-    @IBAction func menuPressed(_ sender: UIButton) {
-        print("menu pressed")
-         menuTableView.isHidden = !menuTableView.isHidden
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsMenuCell", for: indexPath) as UITableViewCell? {
-            cell.textLabel?.text = menu[indexPath.row]
-            cell.textLabel?.textColor = UIColor.blue
-            cell.backgroundColor = UIColor.clear
-            return cell
-        }
-        
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("you click \(menu[indexPath.row])")
-        
-        if menu[indexPath.row] == "SecondVC" {
-            //dismiss(animated: true, completion: nil)
-            
-            print("before dismiss ThirdVC")
-            dismiss(animated: true, completion: {
-                //let secondVC = self.storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
-                //self.present(secondVC, animated:true, completion:nil)
-                //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
-            })
-        }
-    }
-    
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menu.count
-    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         //if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
@@ -126,20 +91,20 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pretty_function()
 
         // Do any additional setup after loading the view.
         imagePicker = UIImagePickerController()
         //imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
-        menuTableView.delegate = self
-        menuTableView.dataSource = self
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
         
-        menuTableView.separatorStyle = .none
-        menuTableView.backgroundColor = UIColor.clear
-        menuTableView.isHidden = true
-        
-        menuBtn.isHidden = true
+        pretty_function()
     }
 
     override func didReceiveMemoryWarning() {
