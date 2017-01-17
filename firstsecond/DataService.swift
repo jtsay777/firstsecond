@@ -41,6 +41,10 @@ class DataService {
         return mainStorageRef.child("videos")
     }
     
+    var avatarsStorageRef: FIRStorageReference {
+        return mainStorageRef.child("avatars")
+    }
+    
     func doesUrerProfileExist(uid: String, onComplete: @escaping (_ existing: Bool) -> Void) {
         //return mainRef.child(FIR_CHILD_USERS).child(uid).value(forKey: "profile") != nil //crash
         
@@ -98,12 +102,37 @@ class DataService {
         let firstName = user.firstName
         let lastName = user.lastName
         let avatarUrl = user.avatarUrl
+        let avatarStorageId = user.avatarStorageId
         
-        let profile: Dictionary<String, AnyObject> = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject, "avatarUrl": avatarUrl as AnyObject]
+        print("updateProfile, avatarUrl = \(avatarUrl)")
+        
+        let profile: Dictionary<String, AnyObject> = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject, "avatarUrl": avatarUrl as AnyObject, "avatarStorageId": avatarStorageId as AnyObject]
         
         mainRef.child(FIR_CHILD_USERS).child(uid).child("profile").setValue(profile)
     }
     
-    
+    func getProfile(uid: String, onComplete: @escaping (_ data: Dictionary<String, String>? ) -> Void) {
+        print("getProfile, uid = \(uid)")
+        
+        usersRef.child(uid).observe(.value, with: { (snapshot) in
+        if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            for snap in snapshot {
+                print("SNAP: \(snap)")
+                if snap.key == "profile" {
+                    if let profile = snap.value as! Dictionary<String, String>? {
+                        print("getProfile, profile = \(profile)")
+                        onComplete(profile)
+                    }
+                }
+                
+            }
+        }
+        else {
+           print("no profile yet!")
+           onComplete(nil)
+        }
+
+        })
+    }
     
 }

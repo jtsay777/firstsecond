@@ -523,7 +523,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5LY-dB-ncI" customClass="RoundTextField" customModule="firstsecond" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="40" width="240" height="30"/>
@@ -534,7 +534,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xZt-jS-An9" customClass="RoundTextField" customModule="firstsecond" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="80" width="240" height="30"/>
@@ -545,7 +545,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -590,6 +590,7 @@
                     </view>
                     <connections>
                         <outlet property="avatarBtn" destination="7RR-N3-bLH" id="INU-v7-051"/>
+                        <outlet property="cancelBtn" destination="qSN-uY-WmV" id="I2a-CC-aZT"/>
                         <outlet property="firstnameTF" destination="0Dk-OW-mhT" id="aci-Oc-vse"/>
                         <outlet property="lastnameTF" destination="5LY-dB-ncI" id="Rgv-CZ-3F8"/>
                         <outlet property="nicknameTF" destination="xZt-jS-An9" id="W32-Se-MOC"/>

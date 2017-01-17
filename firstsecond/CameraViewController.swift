@@ -32,6 +32,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if (vcName == "SettingsVC") {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: vcName) as! SettingsVC
             vc.uid = uid
+            vc.isFirsttime = true
             self.present(vc, animated:true, completion:nil)
         }
     }
