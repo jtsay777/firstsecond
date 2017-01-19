@@ -11,9 +11,10 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
 
-class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var captionTF: UITextField!
 
     private var users = [User]()
     private var selectedUsers = Dictionary<String, User>()
@@ -54,9 +55,9 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 for (key, value) in users {
                     if let dict = value as? Dictionary<String, AnyObject> {
                         if let profile = dict["profile"] as? Dictionary<String, AnyObject> {
-                            if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String {
+                            if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String, let avatarUrl = profile["avatarUrl"] as? String, let avatarStorageId = profile["avatarStorageId"] as? String {
                                 let uid = key
-                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName)
+                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, avatarStorageId: avatarStorageId)
                                 self.users.append(user)
                             }
                         }
@@ -108,7 +109,21 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
 
-    @IBAction func sendPRBtnPressed(sender: AnyObject) {
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func postBtnPressed(sender: AnyObject) {
+                
+        let caption = captionTF.text
+        guard caption != nil && (caption?.trimmingCharacters(in: .whitespacesAndNewlines).characters.count)! > 0 else {
+            let alert = UIAlertController(title: "Caption Required", message: "You must enter a caption for this post", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            present(alert, animated: true, completion:nil)
+            
+            return
+        }
+        print("caption = \(caption)")
         
         if let url = _videoURL {
             let videoName = "\(NSUUID().uuidString)\(url)"
@@ -120,7 +135,7 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     print("Error uploading video: \(err?.localizedDescription)")
                 } else {
                     let downloadURL = meta!.downloadURL()
-                    DataService.instance.sendMediaPullRequest(senderUID: FIRAuth.auth()!.currentUser!.uid, sendingTo: self.selectedUsers, mediaURL: downloadURL!, textSnippet: "Coding today was LEGIT!")
+                    DataService.instance.postMedia(senderUID: FIRAuth.auth()!.currentUser!.uid, sendingTo: self.selectedUsers, mediaURL: downloadURL!, textSnippet: "Coding today was LEGIT!")
                     print("Download URL: \(downloadURL)")
                     //save this somewhere
                     
@@ -129,7 +144,7 @@ class UsersVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             })
             self.dismiss(animated: true, completion: nil)
         } else if let snap = _snapData {
-            let ref = DataService.instance.imagesStorageRef.child("\(NSUUID().uuidString).jpg")
+            let ref = DataService.instance.photosStorageRef.child("\(NSUUID().uuidString).jpg")
             
             _ = ref.put(snap, metadata: nil, completion: { (meta:FIRStorageMetadata?, err:Error?) in
                 if err != nil {

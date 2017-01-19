@@ -18,7 +18,8 @@ class UserCell: UITableViewCell {
     }
     
     func updateUI(user: User) {
-        firstNameLbl.text = user.firstName
+        //firstNameLbl.text = user.firstName
+        firstNameLbl.text = user.nickname
     }
 
     func setCheckmark(selected: Bool) {

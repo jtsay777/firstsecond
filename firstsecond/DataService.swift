@@ -33,8 +33,8 @@ class DataService {
         return FIRStorage.storage().reference(forURL: "gs://first-second-1be39.appspot.com")
     }
     
-    var imagesStorageRef: FIRStorageReference {
-        return mainStorageRef.child("images")
+    var photosStorageRef: FIRStorageReference {
+        return mainStorageRef.child("photos")
     }
     
     var videoStorageRef: FIRStorageReference {
@@ -82,7 +82,7 @@ class DataService {
         
     }
         
-    func sendMediaPullRequest(senderUID: String, sendingTo:Dictionary<String, User>, mediaURL: URL, textSnippet: String? = nil) {
+    func postMedia(senderUID: String, sendingTo:Dictionary<String, User>, mediaURL: URL, textSnippet: String? = nil) {
         
         var uids = [String]()
         for uid in sendingTo.keys {
@@ -91,7 +91,7 @@ class DataService {
 
         let pr: Dictionary<String, AnyObject> = ["mediaURL":mediaURL.absoluteString as AnyObject, "userID":senderUID as AnyObject,"openCount": 0 as AnyObject, "recipients":uids as AnyObject]
         
-        mainRef.child("pullRequests").childByAutoId().setValue(pr)
+        mainRef.child("posts").childByAutoId().setValue(pr)
         
     }
     

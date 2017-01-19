@@ -19,12 +19,14 @@
 		C6453CCB1E23F9540074A130 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CC81E23F9540074A130 /* RoundedButton.swift */; };
 		C6453CCC1E23F9540074A130 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CC91E23F9540074A130 /* UserCell.swift */; };
 		C6453CCF1E23F9850074A130 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CCD1E23F9850074A130 /* LoginVC.swift */; };
-		C6453CD01E23F9850074A130 /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CCE1E23F9850074A130 /* UsersVC.swift */; };
+		C6453CD01E23F9850074A130 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CCE1E23F9850074A130 /* PostVC.swift */; };
 		C6453CD21E23F9C40074A130 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD11E23F9C40074A130 /* User.swift */; };
 		C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD31E23FAA70074A130 /* CameraViewController.swift */; };
 		C6453CD61E23FAA70074A130 /* PhotoCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */; };
 		C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CD71E23FAD50074A130 /* PreviewView.swift */; };
 		C6453CFC1E2847790074A130 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CFB1E2847790074A130 /* SettingsVC.swift */; };
+		C6453CFE1E305CDD0074A130 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CFD1E305CDC0074A130 /* Post.swift */; };
+		C6453D001E305D2B0074A130 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CFF1E305D2B0074A130 /* Response.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,12 +45,14 @@
 		C6453CC81E23F9540074A130 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		C6453CC91E23F9540074A130 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C6453CCD1E23F9850074A130 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		C6453CCE1E23F9850074A130 /* UsersVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersVC.swift; sourceTree = "<group>"; };
+		C6453CCE1E23F9850074A130 /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		C6453CD11E23F9C40074A130 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C6453CD31E23FAA70074A130 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCaptureDelegate.swift; sourceTree = "<group>"; };
 		C6453CD71E23FAD50074A130 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		C6453CFB1E2847790074A130 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		C6453CFD1E305CDC0074A130 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C6453CFF1E305D2B0074A130 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C6C7ADAED02B2D48906D358E /* Pods_firstsecond.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firstsecond.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				C6453CD11E23F9C40074A130 /* User.swift */,
+				C6453CFD1E305CDC0074A130 /* Post.swift */,
+				C6453CFF1E305D2B0074A130 /* Response.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -134,7 +140,7 @@
 				C6453CD31E23FAA70074A130 /* CameraViewController.swift */,
 				C6453CD41E23FAA70074A130 /* PhotoCaptureDelegate.swift */,
 				C6453CCD1E23F9850074A130 /* LoginVC.swift */,
-				C6453CCE1E23F9850074A130 /* UsersVC.swift */,
+				C6453CCE1E23F9850074A130 /* PostVC.swift */,
 				C6453CFB1E2847790074A130 /* SettingsVC.swift */,
 			);
 			name = Controller;
@@ -293,7 +299,9 @@
 				C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */,
 				C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */,
 				C6453CC51E23F8B90074A130 /* AuthService.swift in Sources */,
+				C6453D001E305D2B0074A130 /* Response.swift in Sources */,
 				C6453CCB1E23F9540074A130 /* RoundedButton.swift in Sources */,
+				C6453CFE1E305CDD0074A130 /* Post.swift in Sources */,
 				C6453CCF1E23F9850074A130 /* LoginVC.swift in Sources */,
 				C6453CCA1E23F9540074A130 /* RoundTextField.swift in Sources */,
 				C6453CD61E23FAA70074A130 /* PhotoCaptureDelegate.swift in Sources */,
@@ -301,7 +309,7 @@
 				C6453CC61E23F8B90074A130 /* DataService.swift in Sources */,
 				C6453CCC1E23F9540074A130 /* UserCell.swift in Sources */,
 				C6453CD21E23F9C40074A130 /* User.swift in Sources */,
-				C6453CD01E23F9850074A130 /* UsersVC.swift in Sources */,
+				C6453CD01E23F9850074A130 /* PostVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

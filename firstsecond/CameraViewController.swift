@@ -90,13 +90,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let usersVC = segue.destination as? UsersVC {
+        if let postVC = segue.destination as? PostVC {
             if let videoDict = sender as? Dictionary<String, URL> {
                 let url = videoDict["videoURL"]
-                usersVC.videoURL = url
+                postVC.videoURL = url
             } else if let snapDict = sender as? Dictionary<String, Data> {
                 let snapData = snapDict["snapshotData"]
-                usersVC.snapData = snapData
+                postVC.snapData = snapData
             }
         }
         else if let loginVC = segue.destination as? LoginVC {
@@ -109,7 +109,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func snapshotTaken(_ snapshotData: Data!) {
-        performSegue(withIdentifier: "UsersVC", sender: ["snapshotData":snapshotData])
+        performSegue(withIdentifier: "PostVC", sender: ["snapshotData":snapshotData])
     }
     
     func videoRecordingFailed() {
@@ -117,7 +117,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func videoRecordingComplete(_ videoURL: URL!) {
-        performSegue(withIdentifier: "UsersVC", sender: ["videoURL":videoURL])
+        print("videoURL = \(videoURL.absoluteURL)")
+        performSegue(withIdentifier: "PostVC", sender: ["videoURL":videoURL])
     }
     
 
