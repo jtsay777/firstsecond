@@ -84,7 +84,7 @@ class DataService {
         
     func postMedia(senderUID: String, recipients:[String], caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
         
-        let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject]
+        let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "caption": caption as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject]
         
         let firebasePost = mainRef.child("posts").childByAutoId()
         let pid = firebasePost.key

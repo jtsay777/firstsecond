@@ -130,6 +130,14 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         print("caption = \(caption)")
         
+        guard self.selectedUsers.count > 0 else {
+            let alert = UIAlertController(title: "Recipients Required", message: "You must select at least one recipient", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            present(alert, animated: true, completion:nil)
+
+            return
+        }
+        
         let mediaUid = NSUUID().uuidString
         if let url = _videoURL {
             //let videoName = "\(NSUUID().uuidString)\(url)"
@@ -156,8 +164,18 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     DataService.instance.postMedia(senderUID: senderUid, recipients: uids, caption: caption!, type: "video", group: "public", mediaURL: downloadURL!, mediaStorageId: mediaUid)
                     
                     
-                    //save this somewhere
-                    
+                    //notify the user when the post video has been uploaded.
+                    let alert = UIAlertController(title: "Post", message: "The video has uploaded.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    //self.present(alert, animated: true, completion:nil)
+                    if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                        while let presentedViewController = topController.presentedViewController {
+                            topController = presentedViewController
+                        }
+                        
+                        // topController should now be your topmost view controller
+                        topController.present(alert, animated: true, completion:nil)
+                    }
                 }
                 
             })
