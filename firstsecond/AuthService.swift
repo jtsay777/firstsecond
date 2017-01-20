@@ -42,10 +42,13 @@ class AuthService {
                                     //Sign in
                                     FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                                         if error != nil {
+                                            print("create then sign in, error = \(error.debugDescription)")
                                             self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
                                         } else {
+                                            print("new user sign in successfully!")
                                             //onComplete?(nil, user)
-                                            onComplete?(nil, user?.uid as AnyObject?)
+                                            //onComplete?(nil, user?.uid as AnyObject?)
+                                            onComplete?(nil, user)
                                             
                                         }
                                     })
@@ -53,9 +56,10 @@ class AuthService {
                             }
                         })
                     }
-                } else {
-                    //Handle all other errors
-                    self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
+                    else {
+                        //Handle all other errors
+                        self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
+                    }
                 }
             } else {
                 //Successfully logged in
@@ -67,7 +71,7 @@ class AuthService {
     }
     
     func handleFirebaseError(error: NSError, onComplete: Completion?) {
-        print(error.debugDescription)
+        print("in handleFirebaseError, error = \(error.debugDescription)")
         if let errorCode = FIRAuthErrorCode(rawValue: error.code) {
             switch (errorCode) {
             case .errorCodeInvalidEmail:

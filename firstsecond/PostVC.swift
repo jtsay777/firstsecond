@@ -60,6 +60,11 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                 let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, avatarStorageId: avatarStorageId)
                                 self.users.append(user)
                             }
+                            else if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String {
+                                let uid = key
+                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName)
+                                self.users.append(user)
+                            }
                         }
                     }
                 }
@@ -125,9 +130,12 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         print("caption = \(caption)")
         
+        let mediaUid = NSUUID().uuidString
         if let url = _videoURL {
-            let videoName = "\(NSUUID().uuidString)\(url)"
-            let ref = DataService.instance.videoStorageRef.child(videoName)
+            //let videoName = "\(NSUUID().uuidString)\(url)"
+            
+            //let ref = DataService.instance.videoStorageRef.child(videoName)
+            let ref = DataService.instance.videoStorageRef.child(mediaUid)
             
             _ = ref.putFile(url, metadata: nil, completion: { (meta:FIRStorageMetadata?, err:Error?) in
                 
@@ -135,8 +143,19 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     print("Error uploading video: \(err?.localizedDescription)")
                 } else {
                     let downloadURL = meta!.downloadURL()
-                    DataService.instance.postMedia(senderUID: FIRAuth.auth()!.currentUser!.uid, sendingTo: self.selectedUsers, mediaURL: downloadURL!, textSnippet: "Coding today was LEGIT!")
                     print("Download URL: \(downloadURL)")
+                    
+                    var uids = [String]()
+                    for uid in self.selectedUsers.keys {
+                        uids.append(uid)
+                    }
+                    print("recipients = \(uids)")
+                    let senderUid = FIRAuth.auth()!.currentUser!.uid
+                    print("senderUid = \(senderUid)")
+                    
+                    DataService.instance.postMedia(senderUID: senderUid, recipients: uids, caption: caption!, type: "video", group: "public", mediaURL: downloadURL!, mediaStorageId: mediaUid)
+                    
+                    
                     //save this somewhere
                     
                 }

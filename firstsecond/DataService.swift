@@ -82,16 +82,21 @@ class DataService {
         
     }
         
-    func postMedia(senderUID: String, sendingTo:Dictionary<String, User>, mediaURL: URL, textSnippet: String? = nil) {
+    func postMedia(senderUID: String, recipients:[String], caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
         
-        var uids = [String]()
-        for uid in sendingTo.keys {
-            uids.append(uid)
-        }
+        let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject]
+        
+        let firebasePost = mainRef.child("posts").childByAutoId()
+        let pid = firebasePost.key
+        print("postID = \(pid)")
 
-        let pr: Dictionary<String, AnyObject> = ["mediaURL":mediaURL.absoluteString as AnyObject, "userID":senderUID as AnyObject,"openCount": 0 as AnyObject, "recipients":uids as AnyObject]
+        firebasePost.setValue(data)
         
-        mainRef.child("posts").childByAutoId().setValue(pr)
+        let addUserPostLink = mainRef.child(FIR_CHILD_USERS).child(senderUID).child("posts")
+        addUserPostLink.child(pid).setValue(true)
+    }
+    
+    func postMedia(post: Post) {
         
     }
     
@@ -101,13 +106,19 @@ class DataService {
         let nickname = user.nickname
         let firstName = user.firstName
         let lastName = user.lastName
-        let avatarUrl = user.avatarUrl
-        let avatarStorageId = user.avatarStorageId
+        //let avatarUrl = user.avatarUrl
+        //let avatarStorageId = user.avatarStorageId
         
-        print("updateProfile, avatarUrl = \(avatarUrl)")
+        print("updateProfile, avatarUrl = \(user.avatarUrl)")
         
-        let profile: Dictionary<String, AnyObject> = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject, "avatarUrl": avatarUrl as AnyObject, "avatarStorageId": avatarStorageId as AnyObject]
-        
+        var profile: Dictionary<String, AnyObject>
+        if let avatarUrl = user.avatarUrl, let avatarStorageId = user.avatarStorageId {
+            profile = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject, "avatarUrl": avatarUrl as AnyObject, "avatarStorageId": avatarStorageId as AnyObject]
+        }
+        else {
+            profile = ["nickname": nickname as AnyObject, "firstName": firstName as AnyObject, "lastName": lastName as AnyObject]
+        }
+                
         mainRef.child(FIR_CHILD_USERS).child(uid).child("profile").setValue(profile)
     }
     

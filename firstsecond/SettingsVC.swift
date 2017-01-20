@@ -176,8 +176,18 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         DataService.instance.getProfile(uid: self.uid!) { (data) in
             if let data = data {
             print("data = \(data)")
-            let url = data["avatarUrl"]!
-            print("avatarUrl = \(url)")
+                
+                if let url = data["avatarUrl"], let avatarStorageId = data["avatarStorageId"] {
+                    print("avatarUrl = \(url)")
+                    self.avatarStorageId = avatarStorageId
+                    if let url = NSURL(string: url) {
+                        if let img = NSData(contentsOf: url as URL) {
+                            self.avatarBtn.setImage(UIImage(data: img as Data), for: .normal)
+                        }
+                    }
+ 
+                }
+            
       
             //the following not work?
 //            if let img = SettingsVC.imageCache.object(forKey: url as NSString) {
@@ -185,17 +195,10 @@ class SettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 //                self.avatarBtn.setImage(img, for: .normal)
 //            }
             
-            if let url = NSURL(string: url) {
-                if let img = NSData(contentsOf: url as URL) {
-                    self.avatarBtn.setImage(UIImage(data: img as Data), for: .normal)
-                }        
-            }
-
+            
             self.firstnameTF.text = data["firstName"]
             self.lastnameTF.text = data["lastName"]
             self.nicknameTF.text = data["nickname"]
-            
-            self.avatarStorageId = data["avatarStorageId"]
             }
             
          }
