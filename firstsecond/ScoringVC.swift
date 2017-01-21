@@ -85,6 +85,23 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let post = posts[indexPath.row]
             cell.updateUI(post:post)
             
+            //testing
+            getProfileData(uid: post.uid, onComplete: {(nickname, avatarUrl) in
+                cell.nicknameLabel.text = nickname
+                if let avatarUrl = URL(string: avatarUrl) {
+                    cell.avatarImageView.contentMode = .scaleAspectFit
+                    print("Download Started")
+                    self.getDataFromUrl(url: avatarUrl) { (data, response, error)  in
+                        guard let data = data, error == nil else { return }
+                        print(response?.suggestedFilename ?? avatarUrl.lastPathComponent)
+                        print("Download Finished")
+                        DispatchQueue.main.async() { () -> Void in
+                            cell.avatarImageView.image = UIImage(data: data)
+                        }
+                    }
+                }
+            })
+            
             return cell
         }
         else {
@@ -101,7 +118,36 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    
 
+    func getProfileData(uid:String, onComplete:@escaping (_ nickname:String, _ avatarUrl: String)->Void) {
+        
+        DataService.instance.usersRef.child(uid).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            print("snapshot: \(snapshot.debugDescription)")
+            if let user = snapshot.value as? Dictionary<String, AnyObject> {
+                for (key, value) in user {
+                    if key == "profile" {
+                        if let profile = value as? Dictionary<String, AnyObject> {
+                            let nickname = profile["nickname"]
+                            let avatarUrl = profile["avatarUrl"]
+                            onComplete(nickname as! String, avatarUrl as! String)
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+    }
 
     /*
     // MARK: - Navigation
