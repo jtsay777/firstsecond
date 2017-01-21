@@ -28,5 +28,10 @@ class PostCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func updateUI(post: Post) {
+          
+        captionLabel.text = post.caption
+    }
 
 }

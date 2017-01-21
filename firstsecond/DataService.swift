@@ -7,6 +7,7 @@
 //
 
 let FIR_CHILD_USERS = "users"
+let FIR_CHILD_POSTS = "posts"
 
 import Foundation
 import FirebaseDatabase
@@ -26,6 +27,10 @@ class DataService {
     
     var usersRef: FIRDatabaseReference {
         return mainRef.child(FIR_CHILD_USERS)
+    }
+    
+    var postsRef: FIRDatabaseReference {
+        return mainRef.child(FIR_CHILD_POSTS)
     }
     
     var mainStorageRef: FIRStorageReference {
@@ -84,7 +89,7 @@ class DataService {
         
     func postMedia(senderUID: String, recipients:[String], caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
         
-        let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "caption": caption as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject]
+        let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "caption": caption as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject, "type":type as AnyObject, "group": group as AnyObject]
         
         let firebasePost = mainRef.child("posts").childByAutoId()
         let pid = firebasePost.key

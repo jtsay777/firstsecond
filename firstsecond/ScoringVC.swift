@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseStorage
+import FirebaseAuth
 
 class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    
+    private var posts = [Post]()
     
     @IBAction func playPressed(_ sender: UIButton) {
         print("playPressed, tag = \(sender.tag)")
@@ -31,6 +34,34 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //testing
+        DataService.instance.postsRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            print("snapshot: \(snapshot.debugDescription)")
+            
+            if let posts = snapshot.value as? Dictionary<String, AnyObject> {
+                for (key, value) in posts {
+                    if let dict = value as? Dictionary<String, AnyObject> {
+                        let pid = key as String
+                        let uid = dict["uid"] as! String
+                        let recipients = dict["recipients"] as! [String]
+                        let caption = dict["caption"] as! String
+                        let mediaUrl = dict["mediaURL"] as! String
+                        let mediaStorageId = dict["mediaStorageId"] as! String
+                        let type = dict["type"] as! String
+                        let group = dict["group"] as! String
+                        
+                        let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
+                        
+                        self.posts.append(post)
+                    }
+                }
+            }
+            
+            print("posts: \(self.posts)")
+            self.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,6 +82,9 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.playButton.tag = indexPath.row
             cell.scoreSlider.tag = indexPath.row
             
+            let post = posts[indexPath.row]
+            cell.updateUI(post:post)
+            
             return cell
         }
         else {
@@ -65,7 +99,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return posts.count
     }
 
 
