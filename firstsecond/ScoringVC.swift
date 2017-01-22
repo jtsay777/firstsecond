@@ -10,11 +10,16 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
+import AVFoundation
+import AVKit
 
 class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var posts = [Post]()
     private var _uid: String?
+    private let playerViewController = AVPlayerViewController()
+    private var currentPostIndex: Int = 0
+    private var currentPlayButton: UIButton!
     
     var uid: String? {
         set {
@@ -34,6 +39,12 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     @IBAction func playPressed(_ sender: UIButton) {
         print("playPressed, tag = \(sender.tag)")
+        currentPostIndex = sender.tag
+        currentPlayButton = sender
+        let mediaUrl = posts[sender.tag].mediaUrl
+        playVideo(urlString: mediaUrl)
+        
+        
     }
     
     @IBAction func sliderEnd(_ sender: UISlider) {
@@ -68,6 +79,29 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+    func playerDidFinishPlaying(note: NSNotification) {
+        print("Video Finished")
+        playerViewController.dismiss(animated: true, completion: {
+            self.currentPlayButton.setTitle("Played",for: .normal)
+            self.currentPlayButton.isEnabled = false
+            self.currentPlayButton.setTitleColor(UIColor.gray, for: .disabled)
+        })
+    }
+
+    func playVideo(urlString: String){
+        
+        let videoURL = NSURL(string: urlString)
+        let player = AVPlayer(url: videoURL! as URL)
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(self.playerDidFinishPlaying(note:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        
+        //let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            self.playerViewController.player!.play()
+        }
     }
 
 

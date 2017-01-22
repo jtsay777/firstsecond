@@ -715,9 +715,11 @@
                                                                 <action selector="sliderValueDidChangeWithSender:" destination="iGJ-FH-fF8" eventType="valueChanged" id="RhX-Pz-XgK"/>
                                                             </connections>
                                                         </slider>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZf-Hs-r5o">
-                                                            <rect key="frame" x="321" y="-4" width="46" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZf-Hs-r5o">
+                                                            <rect key="frame" x="307" y="0.0" width="60" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="60" id="Zwx-fd-Ecq"/>
+                                                            </constraints>
                                                             <state key="normal" title="Play">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
@@ -728,6 +730,8 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="BZf-Hs-r5o" secondAttribute="trailing" constant="8" id="S5I-v3-fzC"/>
+                                                        <constraint firstItem="BZf-Hs-r5o" firstAttribute="top" secondItem="l4H-jR-1lz" secondAttribute="top" id="oov-td-ySw"/>
                                                         <constraint firstAttribute="height" constant="100" id="pzt-6d-2Qw"/>
                                                     </constraints>
                                                 </view>
