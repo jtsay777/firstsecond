@@ -16,7 +16,7 @@ struct Post {
     private var _mediaUrl: String
     private var _mediaStorageId: String
     private var _group: String
-    private var _recipients: [String]
+    private var _recipients: Dictionary<String, String>
     
     var pid: String {
         return _pid
@@ -46,11 +46,11 @@ struct Post {
         return _group
     }
     
-    var recipients: [String] {
+    var recipients: Dictionary<String, String> {
         return _recipients
     }
     
-    init(pid: String, uid: String, caption: String, type: String, mediaUrl: String, mediaStorageId: String, group: String, recipients: [String]) {
+    init(pid: String, uid: String, caption: String, type: String, mediaUrl: String, mediaStorageId: String, group: String, recipients: Dictionary<String, String>) {
         _pid = pid
         _uid = uid
         _caption = caption

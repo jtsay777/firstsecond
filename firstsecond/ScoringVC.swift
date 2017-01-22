@@ -14,6 +14,22 @@ import FirebaseAuth
 class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var posts = [Post]()
+    private var _uid: String?
+    
+    var uid: String? {
+        set {
+            _uid = newValue
+        } get {
+            return _uid
+        }
+    }
+    
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func postPressed(_ sender: UIBarButtonItem) {
+    }
     
     @IBAction func playPressed(_ sender: UIButton) {
         print("playPressed, tag = \(sender.tag)")
@@ -71,7 +87,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     if let dict = value as? Dictionary<String, AnyObject> {
                         let pid = key as String
                         let uid = dict["uid"] as! String
-                        let recipients = dict["recipients"] as! [String]
+                        let recipients = dict["recipients"] as! Dictionary<String, String>
                         let caption = dict["caption"] as! String
                         let mediaUrl = dict["mediaURL"] as! String
                         let mediaStorageId = dict["mediaStorageId"] as! String
@@ -80,7 +96,10 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                         
                         let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
                         
-                        self.posts.append(post)
+                        if let status = recipients[uid], status == "unread" {
+                            self.posts.append(post)
+                        }
+                        
                     }
                 }
             }

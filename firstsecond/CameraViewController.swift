@@ -56,15 +56,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         menuTableView.isHidden = true
         
-        if menu[indexPath.row] == "SecondVC" {
-            //dismiss(animated: true, completion: nil)
-            
-            print("before dismiss ThirdVC")
-            dismiss(animated: true, completion: {
-                //let secondVC = self.storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
-                //self.present(secondVC, animated:true, completion:nil)
-                //self.delegate?.launchVC(vcName: self.menu[indexPath.row])
-            })
+        if menu[indexPath.row] == "Scoring" {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoringVC") as! ScoringVC
+            vc.uid = FIRAuth.auth()?.currentUser?.uid
+            self.present(vc, animated:true, completion:nil)
         }
         else if menu[indexPath.row] == "Logout" {
             try! FIRAuth.auth()?.signOut()

@@ -153,9 +153,9 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     let downloadURL = meta!.downloadURL()
                     print("Download URL: \(downloadURL)")
                     
-                    var uids = [String]()
+                    var uids = Dictionary<String, String>()
                     for uid in self.selectedUsers.keys {
-                        uids.append(uid)
+                        uids[uid] = "unread"
                     }
                     print("recipients = \(uids)")
                     let senderUid = FIRAuth.auth()!.currentUser!.uid

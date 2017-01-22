@@ -87,7 +87,7 @@ class DataService {
         
     }
         
-    func postMedia(senderUID: String, recipients:[String], caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
+    func postMedia(senderUID: String, recipients:Dictionary<String, String>, caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
         
         let data: Dictionary<String, AnyObject> = ["uid":senderUID as AnyObject, "recipients":recipients as AnyObject, "caption": caption as AnyObject, "mediaURL":mediaURL.absoluteString as AnyObject, "mediaStorageId":mediaStorageId as AnyObject, "type":type as AnyObject, "group": group as AnyObject]
         
