@@ -11,7 +11,7 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
 
-class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var posts = [Post]()
     
@@ -26,7 +26,33 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func sliderValueDidChange(sender:UISlider!)
     {
         print("tag \(sender.tag):\(Int(sender.value))")
+        let scoreText = "Score: \(Int(sender.value))"
+        let parentView = sender.superview
+ 
+        let myViews = (parentView?.subviews)!.filter{$0 is ScoreLabel}
+        //print("\(myViews)")
+        let myLabel = myViews[0] as! ScoreLabel
+        myLabel.text = scoreText
+  
     }
+    
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        let nsString = textField.text as NSString?
+        let newString = nsString?.replacingCharacters(in: range, with: string)
+
+        print("tag \(textField.tag), comment = \(newString)")
+        return true
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,12 +101,11 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         //if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as PostCell? {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
-            //cell.textLabel?.text = menu[indexPath.row]
-            //cell.textLabel?.textColor = UIColor.yellow
-            //cell.backgroundColor = UIColor.clear
-            
+                     
             cell.playButton.tag = indexPath.row
             cell.scoreSlider.tag = indexPath.row
+            cell.commentTextField.tag = indexPath.row
+            cell.commentTextField.delegate = self
             
             let post = posts[indexPath.row]
             cell.updateUI(post:post)
@@ -88,8 +113,9 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             //testing
             getProfileData(uid: post.uid, onComplete: {(nickname, avatarUrl) in
                 cell.nicknameLabel.text = nickname
+                
                 if let avatarUrl = URL(string: avatarUrl) {
-                    cell.avatarImageView.contentMode = .scaleAspectFit
+                    cell.avatarImageView.contentMode = .scaleAspectFill
                     print("Download Started")
                     self.getDataFromUrl(url: avatarUrl) { (data, response, error)  in
                         guard let data = data, error == nil else { return }

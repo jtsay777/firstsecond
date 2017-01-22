@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		91BB5964EB1F1426CE54E880 /* Pods_firstsecond.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6C7ADAED02B2D48906D358E /* Pods_firstsecond.framework */; };
+		C60061B51E341AA30073DD4D /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60061B41E341AA30073DD4D /* CircleImageView.swift */; };
+		C60061B71E3421BD0073DD4D /* ScoreLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60061B61E3421BD0073DD4D /* ScoreLabel.swift */; };
 		C6453CAB1E23F1EA0074A130 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CAA1E23F1EA0074A130 /* AppDelegate.swift */; };
 		C6453CB01E23F1EA0074A130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6453CAE1E23F1EA0074A130 /* Main.storyboard */; };
 		C6453CB21E23F1EA0074A130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6453CB11E23F1EA0074A130 /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* Begin PBXFileReference section */
 		1B041B0F8E22D042EEF7C334 /* Pods-firstsecond.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firstsecond.debug.xcconfig"; path = "Pods/Target Support Files/Pods-firstsecond/Pods-firstsecond.debug.xcconfig"; sourceTree = "<group>"; };
 		349EA8284F7209956273D867 /* Pods-firstsecond.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firstsecond.release.xcconfig"; path = "Pods/Target Support Files/Pods-firstsecond/Pods-firstsecond.release.xcconfig"; sourceTree = "<group>"; };
+		C60061B41E341AA30073DD4D /* CircleImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		C60061B61E3421BD0073DD4D /* ScoreLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreLabel.swift; sourceTree = "<group>"; };
 		C6453CA71E23F1EA0074A130 /* firstsecond.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = firstsecond.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6453CAA1E23F1EA0074A130 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6453CAF1E23F1EA0074A130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 				C6453CC81E23F9540074A130 /* RoundedButton.swift */,
 				C6453CC91E23F9540074A130 /* UserCell.swift */,
 				C6453D031E3296E90074A130 /* PostCell.swift */,
+				C60061B41E341AA30073DD4D /* CircleImageView.swift */,
+				C60061B61E3421BD0073DD4D /* ScoreLabel.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -306,11 +312,13 @@
 				C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */,
 				C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */,
 				C6453CC51E23F8B90074A130 /* AuthService.swift in Sources */,
+				C60061B71E3421BD0073DD4D /* ScoreLabel.swift in Sources */,
 				C6453D001E305D2B0074A130 /* Response.swift in Sources */,
 				C6453CCB1E23F9540074A130 /* RoundedButton.swift in Sources */,
 				C6453CFE1E305CDD0074A130 /* Post.swift in Sources */,
 				C6453CCF1E23F9850074A130 /* LoginVC.swift in Sources */,
 				C6453D021E3288C80074A130 /* ScoringVC.swift in Sources */,
+				C60061B51E341AA30073DD4D /* CircleImageView.swift in Sources */,
 				C6453CCA1E23F9540074A130 /* RoundTextField.swift in Sources */,
 				C6453CD61E23FAA70074A130 /* PhotoCaptureDelegate.swift in Sources */,
 				C6453CAB1E23F1EA0074A130 /* AppDelegate.swift in Sources */,
