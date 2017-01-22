@@ -19,7 +19,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     private var responses = [Response]()
     private var _uid: String?
     private let playerViewController = AVPlayerViewController()
-    private var currentPostIndex: Int = 0
+    //private var currentPostIndex: Int = 0
     private var currentPlayButton: UIButton!
     
     var uid: String? {
@@ -37,16 +37,22 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     @IBAction func postPressed(_ sender: UIBarButtonItem) {
         print("responses = \(responses)")
+        
+        for response in responses {
+            if response.played {
+                DataService.instance.postScoring(response: response)
+            }
+        }
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func playPressed(_ sender: UIButton) {
         print("playPressed, tag = \(sender.tag)")
-        currentPostIndex = sender.tag
+        //currentPostIndex = sender.tag
         currentPlayButton = sender
         let mediaUrl = posts[sender.tag].mediaUrl
         playVideo(urlString: mediaUrl)
-        
-        
     }
     
     @IBAction func sliderEnd(_ sender: UISlider) {

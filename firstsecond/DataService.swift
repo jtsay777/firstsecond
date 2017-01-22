@@ -86,6 +86,22 @@ class DataService {
         })
         
     }
+    
+    func postScoring(response:Response) {
+        let data: Dictionary<String, AnyObject> = ["uid":response.uid as AnyObject, "pid":response.pid as AnyObject, "score": response.score as AnyObject, "comment":response.comment as AnyObject]
+        
+        let firebasePost = mainRef.child("responses").childByAutoId()
+        let rid = firebasePost.key
+        print("postID = \(rid)")
+        
+         firebasePost.setValue(data)
+        
+        let addUserPostLink = mainRef.child(FIR_CHILD_USERS).child(response.uid).child("responses")
+        addUserPostLink.child(rid).setValue(true)
+        
+        //mark unread as read
+        mainRef.child("posts").child(response.pid).child("recipients").updateChildValues([response.uid:"read"])
+    }
         
     func postMedia(senderUID: String, recipients:Dictionary<String, String>, caption: String, type: String, group: String, mediaURL: URL, mediaStorageId: String) {
         
