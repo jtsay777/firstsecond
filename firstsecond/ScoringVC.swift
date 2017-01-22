@@ -19,6 +19,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var uid: String? {
         set {
             _uid = newValue
+            print("ScoringVC uid set as \(newValue)")
         } get {
             return _uid
         }
@@ -96,7 +97,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                         
                         let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
                         
-                        if let status = recipients[uid], status == "unread" {
+                        if let status = recipients[self.uid!], status == "unread" {
                             self.posts.append(post)
                         }
                         
@@ -130,9 +131,10 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             cell.updateUI(post:post)
             
             //testing
-            getProfileData(uid: post.uid, onComplete: {(nickname, avatarUrl) in
+            getProfileData(uid: self.uid!, onComplete: {(nickname, avatarUrl) in
                 cell.nicknameLabel.text = nickname
                 
+                if avatarUrl.characters.count > 0 {
                 if let avatarUrl = URL(string: avatarUrl) {
                     cell.avatarImageView.contentMode = .scaleAspectFill
                     print("Download Started")
@@ -144,6 +146,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             cell.avatarImageView.image = UIImage(data: data)
                         }
                     }
+                }
                 }
             })
             
@@ -183,8 +186,14 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     if key == "profile" {
                         if let profile = value as? Dictionary<String, AnyObject> {
                             let nickname = profile["nickname"]
-                            let avatarUrl = profile["avatarUrl"]
-                            onComplete(nickname as! String, avatarUrl as! String)
+                            
+                            if let avatarUrl = profile["avatarUrl"] {
+                                onComplete(nickname as! String, avatarUrl as! String)
+                            }
+                            else {
+                                onComplete(nickname as! String, "")
+                            }
+                            
                         }
                         
                     }
