@@ -16,6 +16,7 @@ import AVKit
 class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var posts = [Post]()
+    private var responses = [Response]()
     private var _uid: String?
     private let playerViewController = AVPlayerViewController()
     private var currentPostIndex: Int = 0
@@ -35,6 +36,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     @IBAction func postPressed(_ sender: UIBarButtonItem) {
+        print("responses = \(responses)")
     }
     
     @IBAction func playPressed(_ sender: UIButton) {
@@ -49,6 +51,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     @IBAction func sliderEnd(_ sender: UISlider) {
         print("slider \(sender.tag): End, score = \(Int(sender.value))")
+        responses[sender.tag].score = Int8(sender.value)
     }
 
     @IBAction func sliderValueDidChange(sender:UISlider!)
@@ -72,6 +75,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let newString = nsString?.replacingCharacters(in: range, with: string)
 
         print("tag \(textField.tag), comment = \(newString)")
+        responses[textField.tag].comment = newString!
         return true
         
     }
@@ -87,6 +91,8 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             self.currentPlayButton.setTitle("Played",for: .normal)
             self.currentPlayButton.isEnabled = false
             self.currentPlayButton.setTitleColor(UIColor.gray, for: .disabled)
+            
+            self.responses[self.currentPlayButton.tag].played = true
         })
     }
 
@@ -133,6 +139,10 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                         
                         if let status = recipients[self.uid!], status == "unread" {
                             self.posts.append(post)
+                            
+                            let response = Response(uid: self.uid!, pid: pid)
+                            self.responses.append(response)
+                            
                         }
                         
                     }

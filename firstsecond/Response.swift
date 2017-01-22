@@ -14,9 +14,16 @@ struct Response {
     private var _pid: String
     private var _comment: String
     private var _score: Int8
+    private var _played: Bool = false
     
     var rid: String {
-        return _rid
+        //return _rid
+        get {
+            return _rid
+        }
+        set {
+            _rid = newValue
+        }
     }
     
     var uid: String {
@@ -28,12 +35,36 @@ struct Response {
     }
     
     var comment: String {
-        return _comment
+        //return _comment
+        get {
+           return _comment
+        }
+        set {
+            _comment = newValue
+        }
+        
     }
     
     var score: Int8 {
-        return _score
+        //return _score
+        get {
+            return _score
+        }
+        set {
+            _score = newValue
+        }
     }
+    
+    var played: Bool {
+        get {
+            return _played
+        }
+        set {
+            _played = newValue
+        }
+    }
+
+    
     
     init(rid: String, uid: String, pid: String, comment: String, score: Int8) {
         _rid = rid
@@ -41,6 +72,10 @@ struct Response {
         _pid = pid
         _comment = comment
         _score = score
+    }
+    
+    init(uid: String, pid: String) {
+        self.init(rid:"", uid:uid, pid:pid, comment:"", score:0)
     }
 
 }
