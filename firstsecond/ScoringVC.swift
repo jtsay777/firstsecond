@@ -146,6 +146,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
                             
                             if let status = recipients[self.uid!], status == "unread" {
+                                print("post = \(post)")
                                 self.posts.append(post)
                                 
                                 let response = Response(uid: self.uid!, pid: pid)
@@ -184,7 +185,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             cell.updateUI(post:post)
             
             //testing
-            getProfileData(uid: self.uid!, onComplete: {(nickname, avatarUrl) in
+            getProfileData(uid: post.uid, onComplete: {(nickname, avatarUrl) in
                 cell.nicknameLabel.text = nickname
                 
                 if avatarUrl.characters.count > 0 {

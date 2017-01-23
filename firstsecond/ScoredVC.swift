@@ -23,7 +23,7 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var uid: String? {
         set {
             _uid = newValue
-            print("ScoringVC uid set as \(newValue)")
+            print("ScoredVC uid set as \(newValue)")
         } get {
             return _uid
         }
@@ -54,25 +54,35 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             playerViewController.player!.play()
         }
     }
+    
+    func countOfMyScoredPosts(onComplete:@escaping ()->Void) {
+        DataService.instance.postsRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let posts = snapshot.value as? Dictionary<String, AnyObject> {
+                for (key, value) in posts {
+                    if let dict = value as? Dictionary<String, AnyObject> {
+                        let posterId = dict["uid"] as! String
+                        if (posterId == self.uid) {
+                            let recipients = dict["recipients"] as! Dictionary<String, String>
+                            for (key, value) in recipients {
+                                print("key = \(key), value = \(value)")
+                                if value == "read" {
+                                    print("caption = \(dict["caption"])")
+                                    self.scoredBoardCount += 1
+                                }
+                            }
+                        }
+
+                    }
+                }
+                onComplete()
+            }
+        }
+    }
 
     
     func collectScoredBoard(onComplete:@escaping (_ count:Int)->Void) {
+        
         DataService.instance.responsesRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            
-            //first pass to collect scored board count
-            if let responses = snapshot.value as? Dictionary<String, AnyObject> {
-                for (key, value) in responses {
-                    if let response = value as? Dictionary<String, AnyObject> {
-                        if let uid = response["uid"] as? String {
-                            print("uid = \(uid)")
-                            if uid != self.uid {
-                                self.scoredBoardCount += 1
-                            }
-                        }
-                    }
-                }
-            }
-            print("scoredBoardCount = \(self.scoredBoardCount)")
             
             //var scoreDict = Dictionary<String, String>()
             print("snapshot: \(snapshot.debugDescription)")
@@ -82,7 +92,7 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if let response = value as? Dictionary<String, AnyObject> {
                         if let uid = response["uid"] as? String, let pid = response["pid"] as? String, let score = response["score"] as? Int8, let comment = response["comment"] as? String {
                             print("uid = \(uid), pid = \(pid)")
-                            if uid != self.uid {
+                            if true {
                                 scoreDict["score"] = "\(score)"
                                 scoreDict["comment"] = comment
                                 
@@ -96,35 +106,38 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                                     let caption = dict["caption"] as! String
                                                     let type = dict["type"] as! String
                                                     let mediaUrl = dict["mediaURL"] as! String
-                                                    print("caption = \(caption)")
-                                                    scoreDict["caption"] = caption
-                                                    scoreDict["type"] = type
-                                                    scoreDict["mediaUrl"] = mediaUrl
-                                                    //self.scoreDictArr.append(scoreDict)
-                                                    //print("scoreDictArr: \(self.scoreDictArr)")
-                                                    
-                                                    // try to fetch nickname, avatarUrl from uid's profile
-                                                    DataService.instance.getProfile(uid: uid) { (data) in
-                                                        if let data = data {
-                                                            print("data = \(data)")
-                                                            print("nickname = \(data["nickname"])")
-                                                            scoreDict["nickname"] = data["nickname"]
-                                                            if let url = data["avatarUrl"] {
-                                                                print("avatarUrl = \(url)")
-                                                                scoreDict["avatarUrl"] = url
+                                                    let posterId = dict["uid"] as! String
+                                                      if (posterId == self.uid) {
+                                                        print("caption = \(caption)")
+                                                        scoreDict["caption"] = caption
+                                                        scoreDict["type"] = type
+                                                        scoreDict["mediaUrl"] = mediaUrl
+                                                        //self.scoreDictArr.append(scoreDict)
+                                                        //print("scoreDictArr: \(self.scoreDictArr)")
+                                                        
+                                                        // try to fetch nickname, avatarUrl from uid's profile
+                                                        DataService.instance.getProfile(uid: uid) { (data) in
+                                                            if let data = data {
+                                                                print("data = \(data)")
+                                                                print("nickname = \(data["nickname"])")
+                                                                scoreDict["nickname"] = data["nickname"]
+                                                                if let url = data["avatarUrl"] {
+                                                                    print("avatarUrl = \(url)")
+                                                                    scoreDict["avatarUrl"] = url
+                                                                }
+                                                                
+                                                                self.scoreDictArr.append(scoreDict)
+                                                                //print("scoreDictArr: \(self.scoreDictArr)")
+                                                                let count = self.scoreDictArr.count
+                                                        
+                                                                onComplete(count)
+                                                                
                                                             }
-                                                            
-                                                            self.scoreDictArr.append(scoreDict)
-                                                            //print("scoreDictArr: \(self.scoreDictArr)")
-                                                            let count = self.scoreDictArr.count
-                                                    
-                                                            onComplete(count)
-                                                            
                                                         }
+                                                        
+                                                        
+                                                        break
                                                     }
-                                                    
-                                                    
-                                                    break
                                                 }
                                             }
                                         }
@@ -149,15 +162,18 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
        
-        collectScoredBoard(onComplete: { (count) in
-            print("***COUNT*** = \(count)")
-            if count == self.scoredBoardCount {
-                print("!!!!!!!I got you!!!!!!!")
-                print("scoreDictArr: \(self.scoreDictArr)")
-                
-                self.tableView.reloadData()
-            }
-        })
+        countOfMyScoredPosts {
+            print("After countOfMyScoredPosts, scoreDictArr: \(self.scoreDictArr)")
+            self.collectScoredBoard(onComplete: { (count) in
+                print("***COUNT*** = \(count)")
+                if count == self.scoredBoardCount {
+                    print("!!!!!!!I got you!!!!!!!")
+                    print("scoreDictArr: \(self.scoreDictArr)")
+                    
+                    self.tableView.reloadData()
+                }
+            })
+        }
         
     }
 
