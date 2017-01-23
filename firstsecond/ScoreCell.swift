@@ -28,5 +28,12 @@ class ScoreCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func updateUI(dict:Dictionary<String, String>) {
+        nicknameLabel.text = dict["nickname"]
+        captionLabel.text = dict["caption"]
+        scoreLabel.text = dict["score"]
+        commentLabel.text = dict["comment"]
+    }
 
 }

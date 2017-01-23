@@ -19,7 +19,7 @@ protocol PresentFromMainVC {
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UITableViewDelegate, UITableViewDataSource, PresentFromMainVC {
 	// MARK: View Controller Life Cycle
     
-    let menu = ["Settings", "Scoring", "Scoring Viewer", "Logout"]
+    let menu = ["Settings", "Scoring", "Scored", "Logout"]
     
     @IBOutlet weak var menuTableView: UITableView!
     
@@ -70,8 +70,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
             vc.uid = FIRAuth.auth()?.currentUser?.uid
             self.present(vc, animated:true, completion:nil)
-        } else if menu[indexPath.row] == "Scoring Viewer" {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoringViewerVC") as! ScoringViewerVC
+        } else if menu[indexPath.row] == "Scored" {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoredVC") as! ScoredVC
             vc.uid = FIRAuth.auth()?.currentUser?.uid
             self.present(vc, animated:true, completion:nil)
         }

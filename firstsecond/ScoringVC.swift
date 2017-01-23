@@ -132,23 +132,26 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if let posts = snapshot.value as? Dictionary<String, AnyObject> {
                 for (key, value) in posts {
                     if let dict = value as? Dictionary<String, AnyObject> {
-                        let pid = key as String
+                    
                         let uid = dict["uid"] as! String
-                        let recipients = dict["recipients"] as! Dictionary<String, String>
-                        let caption = dict["caption"] as! String
-                        let mediaUrl = dict["mediaURL"] as! String
-                        let mediaStorageId = dict["mediaStorageId"] as! String
-                        let type = dict["type"] as! String
-                        let group = dict["group"] as! String
-                        
-                        let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
-                        
-                        if let status = recipients[self.uid!], status == "unread" {
-                            self.posts.append(post)
+                        if uid != self.uid {
+                            let pid = key as String
+                            let recipients = dict["recipients"] as! Dictionary<String, String>
+                            let caption = dict["caption"] as! String
+                            let mediaUrl = dict["mediaURL"] as! String
+                            let mediaStorageId = dict["mediaStorageId"] as! String
+                            let type = dict["type"] as! String
+                            let group = dict["group"] as! String
                             
-                            let response = Response(uid: self.uid!, pid: pid)
-                            self.responses.append(response)
+                            let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
                             
+                            if let status = recipients[self.uid!], status == "unread" {
+                                self.posts.append(post)
+                                
+                                let response = Response(uid: self.uid!, pid: pid)
+                                self.responses.append(response)
+                                
+                            }
                         }
                         
                     }

@@ -618,10 +618,10 @@
             </objects>
             <point key="canvasLocation" x="-53444" y="-2060"/>
         </scene>
-        <!--Scoring ViewerVC-->
+        <!--ScoredVC-->
         <scene sceneID="HBl-We-V3u">
             <objects>
-                <viewController storyboardIdentifier="ScoringViewerVC" id="ljd-uo-qt4" customClass="ScoringViewerVC" customModule="firstsecond" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScoredVC" id="ljd-uo-qt4" customClass="ScoredVC" customModule="firstsecond" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4em-sF-BuD"/>
                         <viewControllerLayoutGuide type="bottom" id="8Wd-Zj-C94"/>
@@ -636,7 +636,7 @@
                                     <constraint firstAttribute="height" constant="44" id="O7B-uN-to0"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Scoring Viewer" id="vpJ-ue-McF">
+                                    <navigationItem title="Scored Board" id="vpJ-ue-McF">
                                         <barButtonItem key="rightBarButtonItem" title="Done" id="2y7-wv-AOE">
                                             <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>

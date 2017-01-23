@@ -8,6 +8,7 @@
 
 let FIR_CHILD_USERS = "users"
 let FIR_CHILD_POSTS = "posts"
+let FIR_CHILD_RESPONSES = "responses"
 
 import Foundation
 import FirebaseDatabase
@@ -31,6 +32,10 @@ class DataService {
     
     var postsRef: FIRDatabaseReference {
         return mainRef.child(FIR_CHILD_POSTS)
+    }
+    
+    var responsesRef: FIRDatabaseReference {
+        return mainRef.child(FIR_CHILD_RESPONSES)
     }
     
     var mainStorageRef: FIRStorageReference {
