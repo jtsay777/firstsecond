@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ljd-uo-qt4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -41,10 +41,10 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PTY-cX-QDQ">
-                                <rect key="frame" x="0.0" y="44" width="180" height="240"/>
+                                <rect key="frame" x="0.0" y="44" width="200" height="240"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="9bR-Oz-M1u"/>
+                                    <constraint firstAttribute="width" constant="200" id="9bR-Oz-M1u"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="VnY-fp-rLS"/>
                                     <constraint firstAttribute="height" constant="240" id="gAQ-hV-uwE"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="240" id="n1B-5y-ub9"/>
@@ -52,10 +52,10 @@
                                 <color key="sectionIndexColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" id="ZGe-mI-9Ys">
-                                        <rect key="frame" x="0.0" y="28" width="180" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="200" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZGe-mI-9Ys" id="fe5-4x-8tE">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -636,7 +636,14 @@
                                     <constraint firstAttribute="height" constant="44" id="O7B-uN-to0"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Scoring Viewer" id="vpJ-ue-McF"/>
+                                    <navigationItem title="Scoring Viewer" id="vpJ-ue-McF">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="2y7-wv-AOE">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="donePressed:" destination="ljd-uo-qt4" id="dV8-IZ-sdy"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JEQ-fz-nN8">

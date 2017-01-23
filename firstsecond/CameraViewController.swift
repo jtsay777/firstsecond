@@ -19,7 +19,7 @@ protocol PresentFromMainVC {
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UITableViewDelegate, UITableViewDataSource, PresentFromMainVC {
 	// MARK: View Controller Life Cycle
     
-    let menu = ["Settings", "Scoring", "Sccoring Viewer", "Logout"]
+    let menu = ["Settings", "Scoring", "Scoring Viewer", "Logout"]
     
     @IBOutlet weak var menuTableView: UITableView!
     

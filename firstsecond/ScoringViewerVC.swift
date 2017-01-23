@@ -22,6 +22,10 @@ class ScoringViewerVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
 
+    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func playPressed(_ sender: UIButton) {
         print("playPressed, tag = \(sender.tag)")
       
