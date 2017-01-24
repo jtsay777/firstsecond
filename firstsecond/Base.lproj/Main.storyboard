@@ -424,7 +424,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rqk-sl-b6q" id="6A2-LV-KHm">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jonbon23kickdawg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96r-75-TQN">
@@ -776,6 +776,58 @@
             </objects>
             <point key="canvasLocation" x="-51847.199999999997" y="-1329.0854572713645"/>
         </scene>
+        <!--Play PhotoVC-->
+        <scene sceneID="GYA-3Y-DJp">
+            <objects>
+                <viewController storyboardIdentifier="PlayPhotoVC" id="eJL-K8-9us" customClass="PlayPhotoVC" customModule="firstsecond" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0xF-tz-Mh9"/>
+                        <viewControllerLayoutGuide type="bottom" id="QBZ-0A-vHL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="57G-jW-wZ6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmU-zX-6Ue">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="FHL-Iy-X3J"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Caption" id="aPH-gg-ZaY">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="NVd-3Q-K5H">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="donePressed:" destination="eJL-K8-9us" id="jnX-Q7-diB"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CfF-rG-ume">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TmU-zX-6Ue" firstAttribute="leading" secondItem="57G-jW-wZ6" secondAttribute="leading" id="6Jl-EY-70i"/>
+                            <constraint firstAttribute="trailing" secondItem="TmU-zX-6Ue" secondAttribute="trailing" id="7EE-3h-WDw"/>
+                            <constraint firstItem="QBZ-0A-vHL" firstAttribute="top" secondItem="CfF-rG-ume" secondAttribute="bottom" id="9yY-QN-Ox6"/>
+                            <constraint firstItem="TmU-zX-6Ue" firstAttribute="top" secondItem="0xF-tz-Mh9" secondAttribute="bottom" id="SEG-Gq-zrp"/>
+                            <constraint firstAttribute="trailing" secondItem="CfF-rG-ume" secondAttribute="trailing" id="fVK-Ks-Xrt"/>
+                            <constraint firstItem="CfF-rG-ume" firstAttribute="top" secondItem="TmU-zX-6Ue" secondAttribute="bottom" id="odT-Nb-yeI"/>
+                            <constraint firstItem="CfF-rG-ume" firstAttribute="leading" secondItem="57G-jW-wZ6" secondAttribute="leading" id="x1k-P6-518"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="navigationBar" destination="TmU-zX-6Ue" id="zkQ-Bo-q4L"/>
+                        <outlet property="photoImageView" destination="CfF-rG-ume" id="VPH-gi-Vmz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="egh-FB-UCa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-51106.400000000001" y="-1332.6836581709147"/>
+        </scene>
         <!--ScoringVC-->
         <scene sceneID="KnO-ZT-xr6">
             <objects>
@@ -818,7 +870,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oKm-gq-Zw3" id="BoN-s0-HH9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4H-jR-1lz">

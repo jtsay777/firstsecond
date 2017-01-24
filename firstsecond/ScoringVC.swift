@@ -53,7 +53,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             break
         }
     }
-        
+    
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -76,7 +76,15 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         //currentPostIndex = sender.tag
         currentPlayButton = sender
         let mediaUrl = posts[sender.tag].mediaUrl
-        playVideo(urlString: mediaUrl)
+        let caption = posts[sender.tag].caption
+        
+        switch typeSelection {
+        case .photo:
+            playPhoto(urlString: mediaUrl, caption: caption)
+        case .video:
+            playVideo(urlString: mediaUrl)
+          }
+        
     }
     
     @IBAction func sliderEnd(_ sender: UISlider) {
@@ -140,6 +148,13 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
 
+    func playPhoto(urlString: String, caption: String){
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayPhotoVC") as! PlayPhotoVC
+        vc.photoUrl = urlString
+        vc.caption = caption
+        self.present(vc, animated:true, completion:nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -33,6 +33,7 @@
 		C6453D001E305D2B0074A130 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453CFF1E305D2B0074A130 /* Response.swift */; };
 		C6453D021E3288C80074A130 /* ScoringVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453D011E3288B90074A130 /* ScoringVC.swift */; };
 		C6453D041E3296E90074A130 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6453D031E3296E90074A130 /* PostCell.swift */; };
+		C699F69E1E38099A00F5961A /* PlayPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C699F69D1E38099A00F5961A /* PlayPhotoVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		C6453CFF1E305D2B0074A130 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C6453D011E3288B90074A130 /* ScoringVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoringVC.swift; sourceTree = "<group>"; };
 		C6453D031E3296E90074A130 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		C699F69D1E38099A00F5961A /* PlayPhotoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPhotoVC.swift; sourceTree = "<group>"; };
 		C6C7ADAED02B2D48906D358E /* Pods_firstsecond.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firstsecond.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 				C6453CFB1E2847790074A130 /* SettingsVC.swift */,
 				C6453D011E3288B90074A130 /* ScoringVC.swift */,
 				C60061B81E3561990073DD4D /* ScoredVC.swift */,
+				C699F69D1E38099A00F5961A /* PlayPhotoVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				C6453D041E3296E90074A130 /* PostCell.swift in Sources */,
 				C6453CFC1E2847790074A130 /* SettingsVC.swift in Sources */,
 				C6453CD81E23FAD50074A130 /* PreviewView.swift in Sources */,
+				C699F69E1E38099A00F5961A /* PlayPhotoVC.swift in Sources */,
 				C6453CD51E23FAA70074A130 /* CameraViewController.swift in Sources */,
 				C60061BB1E3572D40073DD4D /* ScoreCell.swift in Sources */,
 				C6453CC51E23F8B90074A130 /* AuthService.swift in Sources */,
