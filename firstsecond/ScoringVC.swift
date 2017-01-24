@@ -13,6 +13,11 @@ import FirebaseAuth
 import AVFoundation
 import AVKit
 
+enum MediaType: Int {
+    case photo = 0
+    case video = 1
+}
+
 class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var posts = [Post]()
@@ -21,6 +26,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     private let playerViewController = AVPlayerViewController()
     //private var currentPostIndex: Int = 0
     private var currentPlayButton: UIButton!
+    private var typeSelection: MediaType = .photo
     
     var uid: String? {
         set {
@@ -30,6 +36,24 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             return _uid
         }
     }
+    
+    @IBAction func mediaChanged(_ sender: UISegmentedControl) {
+        
+        print("SegmentedControl's index = \(sender.selectedSegmentIndex)")
+        
+        typeSelection = MediaType(rawValue: sender.selectedSegmentIndex)!
+        
+        self.posts.removeAll()
+        switch typeSelection {
+        case .photo:
+            loadPosts(mediaType: "photo")
+            break
+        case.video:
+            loadPosts(mediaType: "video")
+            break
+        }
+    }
+        
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -125,6 +149,11 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         tableView.dataSource = self
         
         //testing
+        loadPosts(mediaType: "photo")
+    }
+    
+    func loadPosts(mediaType: String) {
+        //testing
         DataService.instance.postsRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
             print("snapshot: \(snapshot.debugDescription)")
@@ -132,7 +161,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if let posts = snapshot.value as? Dictionary<String, AnyObject> {
                 for (key, value) in posts {
                     if let dict = value as? Dictionary<String, AnyObject> {
-                    
+                        
                         let uid = dict["uid"] as! String
                         if uid != self.uid {
                             let pid = key as String
@@ -145,7 +174,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             
                             let post = Post(pid: pid, uid: uid , caption: caption, type: type, mediaUrl: mediaUrl, mediaStorageId: mediaStorageId, group: group, recipients: recipients)
                             
-                            if let status = recipients[self.uid!], status == "unread" {
+                            if let status = recipients[self.uid!], status == "unread", type == mediaType  {
                                 print("post = \(post)")
                                 self.posts.append(post)
                                 
@@ -162,6 +191,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             print("posts: \(self.posts)")
             self.tableView.reloadData()
         }
+
     }
 
     override func didReceiveMemoryWarning() {

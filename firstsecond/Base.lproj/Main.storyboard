@@ -920,10 +920,13 @@
                                     <constraint firstAttribute="width" constant="121" id="dV4-mg-9Gt"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="Video"/>
                                     <segment title="Photo"/>
+                                    <segment title="Video"/>
                                 </segments>
                                 <color key="tintColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="mediaChanged:" destination="iGJ-FH-fF8" eventType="valueChanged" id="bW0-2J-6GK"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
