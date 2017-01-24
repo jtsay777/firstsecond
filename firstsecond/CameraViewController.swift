@@ -108,6 +108,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func snapshotTaken(_ snapshotData: Data!) {
+        print("snapshotTaken")
         performSegue(withIdentifier: "PostVC", sender: ["snapshotData":snapshotData])
     }
     
@@ -629,6 +630,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 	@IBOutlet private weak var photoButton: UIButton!
 	
 	@IBAction private func capturePhoto(_ photoButton: UIButton) {
+       pretty_function()
+        
 		/*
 			Retrieve the video preview layer's video orientation on the main queue before
 			entering the session queue. We do this to ensure UI elements are accessed on
@@ -653,9 +656,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 				let livePhotoMovieFileName = NSUUID().uuidString
 				let livePhotoMovieFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent((livePhotoMovieFileName as NSString).appendingPathExtension("mov")!)
 				photoSettings.livePhotoMovieFileURL = URL(fileURLWithPath: livePhotoMovieFilePath)
+                print("photoSettings.livePhotoMovieFileURL = \(photoSettings.livePhotoMovieFileURL)")
 			}
 			
 			// Use a separate object for the photo capture delegate to isolate each capture life cycle.
+            print("PhotoCaptureDelegate, photoSettings = \(photoSettings)")
 			let photoCaptureDelegate = PhotoCaptureDelegate(with: photoSettings, willCapturePhotoAnimation: {
 					DispatchQueue.main.async { [unowned self] in
 						self.previewView.videoPreviewLayer.opacity = 0
@@ -664,6 +669,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 						}
 					}
 				}, capturingLivePhoto: { capturing in
+                    print("capturingLivePhoto")
 					/*
 						Because Live Photo captures can overlap, we need to keep track of the
 						number of in progress Live Photo captures to ensure that the
@@ -690,11 +696,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 							}
 						}
 					}
-				}, completed: { [unowned self] photoCaptureDelegate in
+				}, completed: { [unowned self] photoCaptureDelegate, photoData in
+                    print("completed")
 					// When the capture is complete, remove a reference to the photo capture delegate so it can be deallocated.
 					self.sessionQueue.async { [unowned self] in
 						self.inProgressPhotoCaptureDelegates[photoCaptureDelegate.requestedPhotoSettings.uniqueID] = nil
 					}
+                    
+                    //Johnson
+                    if let photoData = photoData {
+                        self.snapshotTaken(photoData)
+                    }
 				}
 			)
 			
@@ -704,6 +716,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 				until the capture is completed.
 			*/
 			self.inProgressPhotoCaptureDelegates[photoCaptureDelegate.requestedPhotoSettings.uniqueID] = photoCaptureDelegate
+            print("self.photoOutput.capturePhoto, photoSettings = \(photoSettings)")
 			self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureDelegate)
 		}
 	}

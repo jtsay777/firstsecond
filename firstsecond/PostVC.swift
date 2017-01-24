@@ -181,14 +181,40 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             })
             self.dismiss(animated: true, completion: nil)
         } else if let snap = _snapData {
-            let ref = DataService.instance.photosStorageRef.child("\(NSUUID().uuidString).jpg")
+            //let ref = DataService.instance.photosStorageRef.child("\(NSUUID().uuidString).jpg")
+            let ref = DataService.instance.photosStorageRef.child(mediaUid)
             
             _ = ref.put(snap, metadata: nil, completion: { (meta:FIRStorageMetadata?, err:Error?) in
                 if err != nil {
                     print("Error uploading snapshot: \(err?.localizedDescription)")
                 } else {
                     let downloadURL = meta!.downloadURL()
-                    //self.dismiss(animated: true, completion: nil)
+                    print("Download URL: \(downloadURL)")
+                    
+                    var uids = Dictionary<String, String>()
+                    for uid in self.selectedUsers.keys {
+                        uids[uid] = "unread"
+                    }
+                    print("recipients = \(uids)")
+                    let senderUid = FIRAuth.auth()!.currentUser!.uid
+                    print("senderUid = \(senderUid)")
+                    
+                    DataService.instance.postMedia(senderUID: senderUid, recipients: uids, caption: caption!, type: "photo", group: "public", mediaURL: downloadURL!, mediaStorageId: mediaUid)
+                    
+                    
+                    //notify the user when the post video has been uploaded.
+                    let alert = UIAlertController(title: "Post", message: "The photo has uploaded.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    //self.present(alert, animated: true, completion:nil)
+                    if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                        while let presentedViewController = topController.presentedViewController {
+                            topController = presentedViewController
+                        }
+                        
+                        // topController should now be your topmost view controller
+                        topController.present(alert, animated: true, completion:nil)
+                    }
+
                 }
            })
 

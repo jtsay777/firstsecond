@@ -16,20 +16,20 @@ class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
 	
 	private let capturingLivePhoto: (Bool) -> ()
 	
-	private let completed: (PhotoCaptureDelegate) -> ()
+	private let completed: (PhotoCaptureDelegate, Data?) -> ()
 	
 	private var photoData: Data? = nil
 	
 	private var livePhotoCompanionMovieURL: URL? = nil
 
-	init(with requestedPhotoSettings: AVCapturePhotoSettings, willCapturePhotoAnimation: @escaping () -> (), capturingLivePhoto: @escaping (Bool) -> (), completed: @escaping (PhotoCaptureDelegate) -> ()) {
+	init(with requestedPhotoSettings: AVCapturePhotoSettings, willCapturePhotoAnimation: @escaping () -> (), capturingLivePhoto: @escaping (Bool) -> (), completed: @escaping (PhotoCaptureDelegate, Data?) -> ()) {
 		self.requestedPhotoSettings = requestedPhotoSettings
 		self.willCapturePhotoAnimation = willCapturePhotoAnimation
 		self.capturingLivePhoto = capturingLivePhoto
 		self.completed = completed
 	}
 	
-	private func didFinish() {
+    private func didFinish(photoData: Data?) {
 		if let livePhotoCompanionMoviePath = livePhotoCompanionMovieURL?.path {
 			if FileManager.default.fileExists(atPath: livePhotoCompanionMoviePath) {
 				do {
@@ -41,8 +41,9 @@ class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
 			}
 		}
 		
-		completed(self)
+		completed(self, photoData)
 	}
+    
 	
 	func capture(_ captureOutput: AVCapturePhotoOutput, willBeginCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings) {
 		if resolvedSettings.livePhotoMovieDimensions.width > 0 && resolvedSettings.livePhotoMovieDimensions.height > 0 {
@@ -56,6 +57,7 @@ class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
 	
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
 		if let photoSampleBuffer = photoSampleBuffer {
+            print("***Before jpegPhotoDataRepresentation***")
             photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
 		}
 		else {
@@ -75,26 +77,33 @@ class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
 		}
 		
 		livePhotoCompanionMovieURL = outputFileURL
+        print("livePhotoCompanionMovieURL = \(livePhotoCompanionMovieURL)")
 	}
 	
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
 		if let error = error {
 			print("Error capturing photo: \(error)")
-			didFinish()
+			didFinish(photoData: nil)
 			return
 		}
 		
 		guard let photoData = photoData else {
 			print("No photo data resource")
-			didFinish()
+			didFinish(photoData: nil)
 			return
 		}
 		
+        //no photo saving, upload to Firebase instead? (Johnson)
+        didFinish(photoData: photoData) //Johnson
+        
+        
+        /*
 		PHPhotoLibrary.requestAuthorization { [unowned self] status in
 			if status == .authorized {
 				PHPhotoLibrary.shared().performChanges({ [unowned self] in
 						let creationRequest = PHAssetCreationRequest.forAsset()
-						creationRequest.addResource(with: .photo, data: photoData, options: nil)
+                        print("###Before creationRequest.addResource###")
+						creationRequest.addResource(with: .photo, data: photoData, options: nil)//Johnson
 					
 						if let livePhotoCompanionMovieURL = self.livePhotoCompanionMovieURL {
 							let livePhotoCompanionMovieFileResourceOptions = PHAssetResourceCreationOptions()
@@ -115,5 +124,7 @@ class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
 				self.didFinish()
 			}
 		}
+         */
+        
 	}
 }
