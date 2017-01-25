@@ -51,21 +51,25 @@ class PostVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             print("snapshot: \(snapshot.debugDescription)")
             
+            let currentUid = FIRAuth.auth()?.currentUser?.uid
             if let users = snapshot.value as? Dictionary<String, AnyObject> {
                 for (key, value) in users {
-                    if let dict = value as? Dictionary<String, AnyObject> {
-                        if let profile = dict["profile"] as? Dictionary<String, AnyObject> {
-                            if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String, let avatarUrl = profile["avatarUrl"] as? String, let avatarStorageId = profile["avatarStorageId"] as? String {
-                                let uid = key
-                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, avatarStorageId: avatarStorageId)
-                                self.users.append(user)
-                            }
-                            else if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String {
-                                let uid = key
-                                let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName)
-                                self.users.append(user)
+                    if key != currentUid {
+                        if let dict = value as? Dictionary<String, AnyObject> {
+                            if let profile = dict["profile"] as? Dictionary<String, AnyObject> {
+                                if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String, let avatarUrl = profile["avatarUrl"] as? String, let avatarStorageId = profile["avatarStorageId"] as? String {
+                                    let uid = key
+                                    let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, avatarStorageId: avatarStorageId)
+                                    self.users.append(user)
+                                }
+                                else if let nickname = profile["nickname"] as? String, let firstName = profile["firstName"] as? String, let lastName = profile["lastName"] as? String {
+                                    let uid = key
+                                    let user = User(uid: uid, nickname: nickname, firstName: firstName, lastName: lastName)
+                                    self.users.append(user)
+                                }
                             }
                         }
+
                     }
                 }
             }

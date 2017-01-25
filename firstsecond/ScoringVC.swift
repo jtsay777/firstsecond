@@ -80,6 +80,11 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         switch typeSelection {
         case .photo:
+            self.currentPlayButton.setTitle("Played",for: .normal)
+            self.currentPlayButton.isEnabled = false
+            self.currentPlayButton.setTitleColor(UIColor.gray, for: .disabled)
+            self.responses[self.currentPlayButton.tag].played = true
+
             playPhoto(urlString: mediaUrl, caption: caption)
         case .video:
             playVideo(urlString: mediaUrl)
@@ -153,6 +158,7 @@ class ScoringVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayPhotoVC") as! PlayPhotoVC
         vc.photoUrl = urlString
         vc.caption = caption
+        vc.timerNeeded = true
         self.present(vc, animated:true, completion:nil)
     }
 

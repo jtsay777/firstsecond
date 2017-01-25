@@ -38,9 +38,24 @@ class ScoredVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
       
         let dict = self.scoreDictArr[sender.tag]
         if let mediaUrl = dict["mediaUrl"] {
-            playVideo(urlString: mediaUrl)
+            let type = dict["type"]
+            if type == "video" {
+                playVideo(urlString: mediaUrl)
+            } else if type == "photo" {
+                playPhoto(urlString: mediaUrl, caption: dict["caption"]!)
+            }
+            
         }
     }
+    
+    func playPhoto(urlString: String, caption: String){
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayPhotoVC") as! PlayPhotoVC
+        vc.photoUrl = urlString
+        vc.caption = caption
+        self.present(vc, animated:true, completion:nil)
+    }
+
     
     func playVideo(urlString: String){
         

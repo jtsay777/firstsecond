@@ -670,11 +670,11 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSK-Qv-b3k">
-                                                            <rect key="frame" x="88" y="40" width="60" height="12"/>
+                                                            <rect key="frame" x="88" y="40" width="69" height="15"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="60" id="VBx-tZ-ee3"/>
+                                                                <constraint firstAttribute="width" constant="69" id="VBx-tZ-ee3"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -703,7 +703,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1C-H4-kGx">
-                                                            <rect key="frame" x="88" y="73" width="255" height="14.5"/>
+                                                            <rect key="frame" x="88" y="75.5" width="255" height="14.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="255" id="YzR-ZH-RV7"/>
                                                             </constraints>

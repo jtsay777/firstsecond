@@ -32,7 +32,7 @@ class ScoreCell: UITableViewCell {
     func updateUI(dict:Dictionary<String, String>) {
         nicknameLabel.text = dict["nickname"]
         captionLabel.text = dict["caption"]
-        scoreLabel.text = dict["score"]
+        scoreLabel.text = "Score: \(dict["score"]!)"
         commentLabel.text = dict["comment"]
     }
 
