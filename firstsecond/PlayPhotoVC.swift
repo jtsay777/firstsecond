@@ -8,7 +8,8 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+//private let reuseIdentifier = "Cell"
+let Timeout = 3.0
 
 class PlayPhotoVC: UIViewController {
     
@@ -71,7 +72,7 @@ class PlayPhotoVC: UIViewController {
                 photoImageView.image = UIImage(data: img as Data)
                 if let needTimer = timerNeeded {
                     if needTimer {
-                        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.timeout), userInfo: nil, repeats: false);
+                        timer = Timer.scheduledTimer(timeInterval: Timeout, target: self, selector: #selector(self.timeout), userInfo: nil, repeats: false);
                     }
                 
                 }

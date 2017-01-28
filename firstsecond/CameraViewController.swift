@@ -646,7 +646,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 			}
 			
 			// Capture a JPEG photo with flash set to auto and high resolution photo enabled.
-			let photoSettings = AVCapturePhotoSettings()
+			//let photoSettings = AVCapturePhotoSettings()
+            // Capture a compressed JPEG of quality 0.2.
+            print("***Capture a compressed JPEG of quality 0.2***")
+            let photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecJPEG, AVVideoCompressionPropertiesKey: [AVVideoQualityKey : NSNumber(value: 0.2)]])
+            
+            
 			photoSettings.flashMode = .auto
 			photoSettings.isHighResolutionPhotoEnabled = true
 			if photoSettings.availablePreviewPhotoPixelFormatTypes.count > 0 {
