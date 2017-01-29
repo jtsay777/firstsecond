@@ -22,10 +22,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     let menu = ["Settings", "Scoring", "Scored", "Logout"]
     
     @IBOutlet weak var menuTableView: UITableView!
+    @IBOutlet weak var noticeView: UIView!
     
     @IBAction func menuPressed(_ sender: UIButton) {
         print("menu pressed!")
         menuTableView.isHidden = !menuTableView.isHidden
+    }
+    
+    @IBAction func noticeOkPressed(_ sender: UIButton) {
+        noticeView.isHidden = true
     }
     
     func launchVC(vcName: String, uid: String) {
@@ -121,8 +126,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         performSegue(withIdentifier: "PostVC", sender: ["videoURL":videoURL])
     }
     
-
-    
     override func viewDidAppear(_ animated: Bool) {
         
         guard FIRAuth.auth()?.currentUser != nil else {
@@ -130,7 +133,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             return
         }
         
-    }
+     }
 	
     override func viewDidLoad() {
 		super.viewDidLoad()
@@ -197,6 +200,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 		sessionQueue.async { [unowned self] in
 			self.configureSession()
 		}
+        
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {

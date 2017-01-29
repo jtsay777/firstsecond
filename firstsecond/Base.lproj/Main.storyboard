@@ -55,7 +55,7 @@
                                         <rect key="frame" x="0.0" y="28" width="200" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZGe-mI-9Ys" id="fe5-4x-8tE">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -68,6 +68,34 @@
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgH-OU-lSF">
+                                <rect key="frame" x="47" y="183" width="280" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Record a movie or take a photo to post for being scored." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBQ-Ch-cht">
+                                        <rect key="frame" x="26" y="36" width="221" height="131"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xey-Tm-p7S">
+                                        <rect key="frame" x="117" y="220" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleColor" red="0.2049270725" green="0.14389961279999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="noticeOkPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rnq-x3-9KZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="SXN-pj-AKQ"/>
+                                    <constraint firstAttribute="width" constant="280" id="tYc-BE-r8i"/>
+                                </constraints>
+                            </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZr-Ip-7WL" userLabel="Resume">
                                 <rect key="frame" x="102" y="314" width="171" height="39"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
@@ -183,6 +211,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="pgH-OU-lSF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0va-nm-h1J"/>
                             <constraint firstItem="3eR-Rn-XpZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="125-kC-WZF"/>
                             <constraint firstItem="PTY-cX-QDQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1tA-QR-a7X"/>
                             <constraint firstItem="uCj-6P-mHF" firstAttribute="height" secondItem="eRT-dK-6dM" secondAttribute="height" id="AEV-ew-H4g"/>
@@ -194,6 +223,7 @@
                             <constraint firstItem="zf0-db-esM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ris-mI-8lA"/>
                             <constraint firstItem="Pii-2r-R2l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Upd-h8-1dL"/>
                             <constraint firstItem="zf0-db-esM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W6q-xJ-jfF"/>
+                            <constraint firstItem="pgH-OU-lSF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZQv-nH-pXv"/>
                             <constraint firstItem="uCj-6P-mHF" firstAttribute="height" secondItem="rUJ-G6-RPv" secondAttribute="height" id="aQi-F7-E2b"/>
                             <constraint firstItem="uCj-6P-mHF" firstAttribute="top" secondItem="FAC-co-10c" secondAttribute="bottom" constant="20" id="aSR-Je-0lW"/>
                             <constraint firstItem="uCj-6P-mHF" firstAttribute="top" secondItem="eRT-dK-6dM" secondAttribute="top" id="bQd-ro-0Hw"/>
@@ -222,6 +252,7 @@
                         <outlet property="capturingLivePhotoLabel" destination="Pii-2r-R2l" id="JAa-4l-5SD"/>
                         <outlet property="livePhotoModeButton" destination="eI6-gV-W7d" id="r9f-cN-YSH"/>
                         <outlet property="menuTableView" destination="PTY-cX-QDQ" id="tA6-Vb-bSj"/>
+                        <outlet property="noticeView" destination="pgH-OU-lSF" id="xGr-K4-9S1"/>
                         <outlet property="photoButton" destination="uCj-6P-mHF" id="Ha8-ua-hxy"/>
                         <outlet property="previewView" destination="3eR-Rn-XpZ" id="e7I-nu-L6j"/>
                         <outlet property="recordButton" destination="eRT-dK-6dM" id="iqk-en-NsW"/>
@@ -237,7 +268,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-53466" y="-594"/>
+            <point key="canvasLocation" x="-53466.400000000001" y="-594.15292353823088"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="pbc-gi-7Bb">

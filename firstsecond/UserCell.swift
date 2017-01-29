@@ -23,7 +23,7 @@ class UserCell: UITableViewCell {
     }
 
     func setCheckmark(selected: Bool) {
-        let imageStr = selected ? "messageindicatorchecked1" : "messageindicator1"
+        let imageStr = selected ? "messageindicatorchecked2" : "messageindicator2"
         self.accessoryView = UIImageView(image: UIImage(named: imageStr))
     }
 
